@@ -54,6 +54,42 @@ This advanced scenario shows how vCluster enables sophisticated CRD management a
 - Custom resources can be managed independently
 - Flexible tenancy models for complex deployments
 
+## Scenario 104: vCluster 104 - Advanced Configuration and Performance Optimization
+
+This scenario explores advanced vCluster configuration options and performance optimization techniques for production environments.
+
+### What You'll Learn
+- Advanced vCluster configuration flags and options
+- Resource allocation and performance tuning
+- Monitoring and observability setup
+- Network optimization techniques
+- Scaling vClusters for production workloads
+
+### Key Concepts
+- Advanced vCluster configuration for production use
+- Resource management for optimal performance
+- Monitoring solutions for vCluster environments
+- Network optimization for vCluster workloads
+- Scaling strategies for enterprise deployments
+
+## Scenario 105: vCluster 105 - Practical Use Cases and Integration Patterns
+
+This scenario explores practical real-world use cases for vCluster and demonstrates integration patterns with common Kubernetes tools and workflows.
+
+### What You'll Learn
+- CI/CD integration with vCluster
+- Developer sandbox environments
+- Testing and staging environments
+- Integration with service meshes
+- Backup and disaster recovery strategies
+
+### Key Concepts
+- vCluster in CI/CD pipelines for testing
+- Developer self-service environments
+- Isolated testing and staging scenarios
+- Integration with service mesh technologies
+- Backup and recovery for vCluster environments
+
 ## Getting Started
 
 Each scenario is designed to be self-contained and can be run independently. Start with vCluster 101 to learn the basics, then progress to 102 and 103 for advanced concepts.
