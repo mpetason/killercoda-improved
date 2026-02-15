@@ -24,3 +24,7 @@ This demonstrates the core isolation principle:
 - This isolation prevents conflicts and enables flexible tenancy models
 
 This capability is essential for complex Kubernetes environments where different teams need different CRD versions or custom resources.
+
+## Important Note
+
+We've now established the baseline CRD environment in the host cluster. We'll continue working in the vCluster for the next step, but remember that we'll need to disconnect from the vCluster before proceeding with host cluster operations in later steps.

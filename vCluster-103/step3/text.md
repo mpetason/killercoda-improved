@@ -26,3 +26,7 @@ This demonstrates advanced vCluster capabilities:
 - This enables flexible tenancy models where each tenant can have their own CRD ecosystem
 
 This level of flexibility is what makes vCluster powerful for enterprise Kubernetes deployments.
+
+## Important Note
+
+We've now demonstrated CRD isolation between the host and vCluster. In the next step, we'll disconnect from the vCluster to return to the host cluster context so we can continue with host cluster operations.

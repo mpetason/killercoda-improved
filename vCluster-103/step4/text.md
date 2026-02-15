@@ -6,7 +6,7 @@ Let's examine the differences between CRDs in the host and vCluster:
 
 `kubectl get crd myapp.example.com -o yaml`{{exec}}
 
-Now let's disconnect from the vCluster and verify the host cluster CRDs:
+Now let's disconnect from the vCluster to return to the host cluster context:
 
 `vcluster disconnect`{{exec}}
 
@@ -22,3 +22,7 @@ This comparison shows the isolation capabilities:
 - The host cluster remains unchanged when vClusters install CRDs
 
 This demonstrates how vCluster enables true control plane isolation at the CRD level, which is essential for managing complex multi-tenant Kubernetes deployments.
+
+## Important Note
+
+We've disconnected from the vCluster to ensure we're working in the host cluster context for the next steps. This is important because the following steps will install CRDs directly on the host cluster, and we want to make sure we're not inadvertently installing them in the vCluster.

@@ -22,3 +22,7 @@ This demonstrates a key concept of vCluster:
 - Each vCluster can have its own CRD version or completely different CRDs
 
 This is a fundamental benefit of vCluster - true control plane isolation.
+
+## Important Note
+
+In this scenario, we'll be working with both the host cluster and a vCluster. We'll first create a vCluster, perform operations within it, and then disconnect to work directly on the host cluster for the next steps.

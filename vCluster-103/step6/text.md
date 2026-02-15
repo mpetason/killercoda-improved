@@ -21,3 +21,7 @@ List Kyverno CRDs:
 `kubectl get crds | grep -i kyverno`{{exec}}
 
 The host now contains Kyverno CRDs.
+
+## Important Note
+
+We've confirmed we're in the host cluster context. This is important because we're about to install CRDs directly on the host cluster, which will be available to all namespaces in the cluster.

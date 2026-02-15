@@ -22,3 +22,7 @@ CRD (Custom Resource Definition) management is a critical aspect of Kubernetes m
 - Exploring tenancy models and isolation patterns
 
 This scenario demonstrates how vCluster provides complete control plane isolation, which is essential for managing complex Kubernetes environments.
+
+## Important Note
+
+Throughout this scenario, you'll work in both vCluster and host cluster contexts. It's important to understand when you're working in each environment and when to disconnect from the vCluster to ensure you're performing operations in the correct context.
