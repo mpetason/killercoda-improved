@@ -1,5 +1,5 @@
 {
-  "title": "vCluster 110: Monitoring and Observability",
+  "title": "v110 - Monitoring and Observability",
   "description": "Learn how to set up monitoring and observability for vCluster environments using Prometheus and Grafana",
   "difficulty": "Intermediate",
   "time": "30",
