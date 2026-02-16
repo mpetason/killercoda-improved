@@ -2,7 +2,7 @@
   "title": "v104 - vCluster Resource Management",
   "description": "Learn how to manage resources in vCluster environments.",
   "difficulty": "intermediate",
-  "time": 30,
+  "time": "30",
   "category": "Kubernetes",
   "tags": ["vcluster", "resources", "kubernetes", "cpu", "memory", "cli"],
   "details": {

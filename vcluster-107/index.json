@@ -2,7 +2,7 @@
   "title": "v107 - vCluster Security Best Practices",
   "description": "Security best practices for vCluster environments",
   "difficulty": "intermediate",
-  "time": 45,
+  "time": "45",
   "category": "Kubernetes",
   "tags": ["vcluster", "security", "best-practices", "configuration", "cli"],
   "details": {

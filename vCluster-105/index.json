@@ -2,7 +2,7 @@
   "title": "v105 - vCluster Network Traffic",
   "description": "Network traffic scenario for vCluster",
   "difficulty": "intermediate",
-  "time": 30,
+  "time": "30",
   "category": "Kubernetes",
   "tags": ["vcluster", "network", "traffic", "monitoring", "cli"],
   "details": {

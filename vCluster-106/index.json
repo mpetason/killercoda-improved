@@ -2,7 +2,7 @@
   "title": "v106 - vCluster Custom Content",
   "description": "Custom content scenario for vCluster",
   "difficulty": "intermediate",
-  "time": 30,
+  "time": "30",
   "category": "Kubernetes",
   "tags": ["vcluster", "custom", "content", "configuration", "cli"],
   "details": {

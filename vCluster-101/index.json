@@ -2,7 +2,7 @@
   "title": "v101 - Hello vCluster",
   "description": "Hello vCluster",
   "difficulty": "beginner",
-  "time": 15,
+  "time": "15",
   "category": "Kubernetes",
   "tags": ["vcluster", "kubernetes", "cli", "basics"],
   "details": {
