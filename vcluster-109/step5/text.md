@@ -1,39 +1,48 @@
-# Testing the Implementation
+# Testing and Verifying Network Policies
 
-In this final step, we'll verify that our vCluster External Secrets integration is working correctly.
+In this final step, we'll test our network policies to ensure they're working as expected.
 
-Let's run a few verification commands to make sure everything is set up properly:
-
-1. First, let's verify our workflow files exist:
+Let's first check all our network policies:
 ```bash
-ls -la .github/workflows/
-```
+kubectl get networkpolicies
+kubectl describe networkpolicy allow-all
+kubectl describe networkpolicy allow-from-specific-pods
+kubectl describe networkpolicy allow-from-namespace
+kubectl describe networkpolicy allow-from-ip-range
+` ``
 
-2. Let's verify our vcluster configuration exists:
+Let's test connectivity between our pods to verify policy enforcement:
 ```bash
-ls -la vcluster.yaml
-```
+# Test from test-pod to nginx deployment (should work - no restrictions)
+kubectl exec test-pod -- wget -qO- http://nginx:80
 
-3. Let's verify our directory structure:
+# Test from test-pod to frontend deployment (should work - has matching label)
+kubectl exec test-pod -- wget -qO- http://frontend:80
+
+# Test from test-pod to backend deployment (should fail - no matching label)
+kubectl exec test-pod -- wget -qO- http://backend:80
+` ``
+
+Let's also test with a pod in the frontend namespace:
 ```bash
-find . -name "*.yaml" -type f | head -10
-```
+# Test from test-pod to frontend-namespace service (should work - from allowed namespace)
+kubectl exec test-pod -- wget -qO- http://frontend-namespace.frontend-namespace.svc.cluster.local:80
+` ``
 
-4. Let's check that our workflow files have the correct structure:
+Let's also test that we can still access services from within the cluster:
 ```bash
-cat .github/workflows/vcluster-management.yaml | head -20
-```
+kubectl get svc
+kubectl get pods
+` ``
 
-5. Let's also verify our external secrets configuration:
-```bash
-cat external-secret.yaml
-```
+Network policies in vCluster environments work the same way as in regular Kubernetes clusters. They provide a powerful mechanism for securing communication between pods while maintaining the flexibility of virtual clusters.
 
-This implementation provides a complete solution for managing secrets in vCluster environments using External Secrets Operator. The solution enables:
-- Automated provisioning of vClusters with External Secrets integration
-- Secure access to external secret stores (AWS, Vault, etc.)
-- Automatic secret synchronization and rotation
-- Integration with GitOps workflows
-- Proper security policies and access controls
+## Summary
 
-The External Secrets approach provides a secure and scalable way to manage secrets in virtual cluster environments, allowing teams to maintain centralized secret management while keeping their applications isolated in virtual clusters.
+In this lab, we've learned how to:
+1. Set up a vCluster with network policy support
+2. Create basic network policies to control pod communication
+3. Implement more advanced network policies with namespace and IP restrictions
+4. Test and verify network policy enforcement
+
+Network policies are a crucial part of securing vCluster environments, especially in multi-tenant scenarios where isolation between teams is important.

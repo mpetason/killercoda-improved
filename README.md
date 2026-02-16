@@ -4,6 +4,43 @@ This directory contains improved vCluster scenarios for Killercoda labs.
 
 ## Available Scenarios
 
+### vCluster 101: Hello vCluster
+- Install the vCluster CLI
+- Deploy a vCluster
+- Connect to and inspect the vCluster
+- Create a Deployment in the vCluster and view resources
+- Disconnect from the vCluster and inspect the Host Cluster
+- Clean up resources
+
+### vCluster 102: Multi-Tenancy Isolation via Same Application Names
+- Demonstrate how vClusters allow two tenants to run the same application and service names without conflict
+- Create two vClusters
+- Deploy same app name in both
+- Expose both apps
+- Verify independent access
+- Cleanup & wrap-up
+
+### vCluster 103: vCluster Tenancy Models & CRDs
+- Learn about different vCluster tenancy models
+- Understand vCluster Custom Resource Definitions (CRDs)
+- Explore different isolation patterns
+
+### vCluster 104: vCluster Multi-Step Verification
+- Multi-step verification scenario for vCluster
+- Comprehensive testing of vCluster functionality
+
+### vCluster 105: vCluster Network Traffic
+- Network traffic scenario for vCluster
+- Understand network behavior in virtual clusters
+
+### vCluster 106: vCluster Custom Content
+- Custom content scenario for vCluster
+- Advanced customization techniques
+
+### vCluster 107: vCluster Security Best Practices
+- Security best practices for vCluster environments
+- Secure configuration and deployment strategies
+
 ### vCluster 108: Istio Ambient Mode
 - Learn how to deploy and configure Istio ambient mode in vCluster
 - Implement traffic management with VirtualServices and DestinationRules

@@ -1,48 +1,97 @@
-# Testing External Secrets Integration
+# Advanced Network Policy Patterns
 
-In this step, we'll test our External Secrets Operator implementation.
+In this step, we'll explore more advanced network policy patterns that can be used in vCluster environments.
 
-Let's deploy our configurations to the vCluster:
+Let's create a network policy that allows traffic only from specific namespaces:
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-from-namespace
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: frontend-namespace
+` ``
 
+Let's create a separate namespace and apply this policy:
 ```bash
-# Apply the secret store configurations
-kubectl apply -f secret-store.yaml --kubeconfig kubeconfig.yaml
+kubectl create namespace frontend-namespace
+kubectl label namespace frontend-namespace name=frontend-namespace
+` ``
 
-# Apply the external secret configuration
-kubectl apply -f external-secret.yaml --kubeconfig kubeconfig.yaml
-
-# Apply the AWS credentials (in a real scenario, you'd use proper secrets)
-kubectl apply -f aws-credentials.yaml --kubeconfig kubeconfig.yaml
-```
-
-Now let's verify that our External Secrets are working:
-
+Let's create a pod in that namespace:
 ```bash
-# Check if ExternalSecrets controller is running
-kubectl get pods -n external-secrets --kubeconfig kubeconfig.yaml
+kubectl run frontend-pod --image=nginx --namespace=frontend-namespace
+` ``
 
-# Check if the secret was created
-kubectl get secret db-secret --kubeconfig kubeconfig.yaml
-
-# Check the ExternalSecret status
-kubectl get externalsecret db-secret --kubeconfig kubeconfig.yaml
-
-# Describe the ExternalSecret for detailed information
-kubectl describe externalsecret db-secret --kubeconfig kubeconfig.yaml
-```
-
-Let's also test that our application can access the secrets:
-
+Now let's create and apply the policy:
 ```bash
-# Check if our application pod can access the secret
-kubectl exec -it deployment/secret-test-app -- env --kubeconfig kubeconfig.yaml
+cat > allow-from-namespace.yaml << EOF
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-from-namespace
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: frontend-namespace
+EOF
 
-# Verify the secret content
-kubectl get secret db-secret -o yaml --kubeconfig kubeconfig.yaml
-```
+kubectl apply -f allow-from-namespace.yaml
+` ``
 
-The External Secrets integration should:
-1. Automatically fetch secrets from external stores
-2. Create Kubernetes secrets in the vCluster
-3. Make those secrets available to applications
-4. Handle secret rotation and updates automatically
+Let's test if we can access the service from the frontend namespace:
+```bash
+kubectl exec test-pod -- wget -qO- http://frontend-namespace.frontend-namespace.svc.cluster.local:80
+` ``
+
+This should work because we're allowing traffic from the frontend-namespace.
+
+Let's also test a more restrictive policy that allows traffic only from specific IP ranges:
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-from-ip-range
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - ipBlock:
+        cidr: 10.0.0.0/8
+` ``
+
+Let's apply this policy:
+```bash
+cat > allow-from-ip-range.yaml << EOF
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-from-ip-range
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - ipBlock:
+        cidr: 10.0.0.0/8
+EOF
+
+kubectl apply -f allow-from-ip-range.yaml
+` ``
+
+Network policies are a powerful tool for securing vCluster environments. They provide fine-grained control over pod communication and help enforce security best practices in multi-tenant environments.

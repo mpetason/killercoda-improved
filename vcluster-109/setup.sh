@@ -1,21 +1,17 @@
 #!/bin/bash
 
-# Setup script for vCluster 109 - External Secrets Integration
+# Setup script for vCluster 109 - Network Policies
+echo "Setting up vCluster 109 environment..."
 
-# Install vCluster CLI
-echo "Installing vCluster CLI..."
-curl -L -o vcluster "https://github.com/loft-sh/vcluster/releases/latest/download/vcluster-linux-amd64" && sudo install -c -m 0755 vcluster /usr/local/bin && rm -f vcluster
+# Install vCluster CLI if not present
+if ! command -v vcluster &> /dev/null; then
+    echo "Installing vCluster CLI..."
+    curl -L https://github.com/fidelity/vcluster/releases/latest/download/vcluster-linux-amd64 -o /usr/local/bin/vcluster
+    chmod +x /usr/local/bin/vcluster
+fi
 
-# Verify installation
-echo "Verifying vCluster installation..."
-vcluster --version
+# Create the working directory
+mkdir -p ~/vcluster-network-policies
+cd ~/vcluster-network-policies
 
-# Install Helm (needed for External Secrets Operator)
-echo "Installing Helm..."
-curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-
-# Install External Secrets Operator CLI
-echo "Installing External Secrets Operator CLI..."
-kubectl apply -f https://github.com/external-secrets/external-secrets/releases/latest/download/bundle.yaml
-
-echo "Setup complete!"
+echo "vCluster 109 environment setup complete!"

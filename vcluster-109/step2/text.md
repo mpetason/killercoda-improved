@@ -1,83 +1,70 @@
-# Deploying External Secrets Operator to vCluster
+# Creating Network Policies
 
-In this step, we'll deploy External Secrets Operator to our vCluster.
+In this step, we'll create our first network policy to understand how network isolation works in vCluster.
 
-First, let's check if we have the vCluster CLI installed and configured:
+First, let's create a simple application to test our network policies with:
 
 ```bash
-vcluster --version
+kubectl create deployment nginx --image=nginx
+kubectl expose deployment nginx --port=80
 ```
 
-Next, let's create a simple deployment that we'll use to test our External Secrets integration:
+Let's also create a test pod that we'll use to verify our policies:
 
+```bash
+kubectl run test-pod --image=busybox --restart=Never -- sleep 3600
+```
+
+Now, let's examine the default network policy behavior. By default, all pods in a Kubernetes cluster can communicate with each other unless a network policy is explicitly defined to block traffic.
+
+Let's check the pods and services we've created:
+```bash
+kubectl get pods
+kubectl get services
+```
+
+Now let's create a simple network policy that allows all traffic (this is the default behavior):
 ```yaml
-# deployment.yaml - Simple application deployment with secret reference
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
 metadata:
-  name: secret-test-app
-  labels:
-    app: secret-test-app
+  name: allow-all
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: secret-test-app
-  template:
-    metadata:
-      labels:
-        app: secret-test-app
-    spec:
-      containers:
-      - image: nginx:latest
-        name: nginx
-        ports:
-        - containerPort: 80
-        env:
-        - name: DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: db-secret
-              key: password
-        - name: DB_USER
-          valueFrom:
-            secretKeyRef:
-              name: db-secret
-              key: username
-        resources:
-          requests:
-            cpu: "100m"
-            memory: "128Mi"
-          limits:
-            cpu: "200m"
-            memory: "256Mi"
----
-apiVersion: v1
-kind: Service
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - {}
+  egress:
+  - {}
+` ``
+
+Let's create this network policy:
+```bash
+cat > allow-all-policy.yaml << EOF
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
 metadata:
-  name: secret-test-app
+  name: allow-all
 spec:
-  selector:
-    app: secret-test-app
-  ports:
-  - port: 80
-    targetPort: 80
-```
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - {}
+  egress:
+  - {}
+EOF
 
-Now, let's deploy this application to our vCluster:
+kubectl apply -f allow-all-policy.yaml
+` ``
 
+Let's verify the policy was applied:
 ```bash
-# Connect to vCluster
-vcluster connect my-vcluster --server vcluster-k8s-api.example.com --print > kubeconfig.yaml
+kubectl get networkpolicies
+kubectl describe networkpolicy allow-all
+` ``
 
-# Deploy the application
-kubectl apply -f deployment.yaml --kubeconfig kubeconfig.yaml
-```
-
-After deployment, we can verify that the application is running:
-
-```bash
-kubectl get pods -l app=secret-test-app --kubeconfig kubeconfig.yaml
-```
-
-However, we still need to set up the External Secrets configuration to actually provide the secrets.
+This network policy allows all ingress and egress traffic to all pods in the namespace. It's equivalent to no network policy being applied.
