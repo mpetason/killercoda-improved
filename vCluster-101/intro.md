@@ -6,9 +6,9 @@ vCluster lets teams run virtual Kubernetes clusters on existing host clusters, g
 
 ![vCluster Architecture](./assets/shared-nodes.png)
 
-## What this lab covers
+## What You'll Learn
 
-In this lab we will cover the essential concepts and basic operations of vCluster:
+In this lab you'll learn the essential concepts and basic operations of vCluster:
 
 - Install the vCluster CLI
 - Deploy a vCluster
@@ -17,7 +17,9 @@ In this lab we will cover the essential concepts and basic operations of vCluste
 - Disconnect from the vCluster and inspect the Host Cluster
 - Clean up resources
 
-We'll keep the introduction short and then move on to more customizations and advanced options in the following labs. The purpose of this guide is to give you an easier option to get started with vCluster, especially if you do not currently have access to a Kubernetes Cluster.
+## What This Lab Covers
+
+This lab is designed to give you a quick start with vCluster, especially if you do not currently have access to a Kubernetes Cluster. We'll keep the introduction short and then move on to more customizations and advanced options in the following labs.
 
 Thanks for checking this lab out. We think vCluster is pretty cool and would love to hear from you if you have any feedback.
 

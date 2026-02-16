@@ -1,14 +1,14 @@
 # vCluster 102 - Multi-Tenancy Isolation
 
+## What is vCluster?
+
+vCluster lets teams run virtual Kubernetes clusters on existing host clusters, giving each tenant an isolated control plane without creating separate physical clusters. It supports tenancy models from simple namespace isolation to fully dedicated nodes, GPUs, and bare metal. Environments are defined declaratively for easy, repeatable provisioning. By consolidating many virtual clusters onto fewer hosts, teams cut Kubernetes costs and simplify multi-tenant operations.
+
+![vCluster Multi-Tenancy](./assets/multi-tenancy.png)
+
 ## What You'll Learn
 
 In this scenario, you'll explore how vCluster enables true multi-tenancy by allowing multiple tenants to run the same application names without conflicts.
-
-## Why This Matters
-
-Multi-tenancy is a key benefit of vCluster. When multiple teams or applications need to use the same names (like "my-app"), vCluster ensures they don't interfere with each other because each tenant operates in its own isolated control plane.
-
-![vCluster Multi-Tenancy](./assets/multi-tenancy.png)
 
 ## What This Lab Covers
 

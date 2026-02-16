@@ -1,6 +1,10 @@
 {
   "title": "v103 - vCluster Tenancy Models & CRDs",
   "description": "vCluster Tenancy Models and CRDs scenario.",
+  "difficulty": "intermediate",
+  "time": 30,
+  "category": "Kubernetes",
+  "tags": ["vcluster", "kubernetes", "tenancy", "crd", "multitenancy", "cli"],
   "details": {
     "intro": {
       "text": "intro.md",
