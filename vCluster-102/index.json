@@ -1,6 +1,10 @@
 {
   "title": "v102 - Multi-Tenancy Isolation via Same Application Names",
   "description": "Demonstrate how vClusters allow two tenants to run the same application and service names without conflict.",
+  "difficulty": "beginner",
+  "time": 20,
+  "category": "Kubernetes",
+  "tags": ["vcluster", "kubernetes", "multi-tenancy", "isolation", "cli"],
   "details": {
     "intro": {
       "text": "intro.md",

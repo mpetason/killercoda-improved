@@ -1,10 +1,10 @@
 {
   "title": "v109 - Network Policies",
   "description": "Learn how to implement network policies in vCluster environments for secure pod communication",
-  "difficulty": "Intermediate",
-  "time": "30",
-  "category": "vcluster",
-  "tags": ["vcluster", "network-policies", "security", "kubernetes"],
+  "difficulty": "intermediate",
+  "time": 30,
+  "category": "Kubernetes",
+  "tags": ["vcluster", "network-policies", "security", "kubernetes", "cli"],
   "details": {
     "intro": {
       "text": "intro.md",

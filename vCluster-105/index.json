@@ -1,32 +1,23 @@
 {
   "title": "v105 - vCluster Network Traffic",
   "description": "Network traffic scenario for vCluster",
+  "difficulty": "intermediate",
+  "time": 30,
+  "category": "Kubernetes",
+  "tags": ["vcluster", "network", "traffic", "monitoring", "cli"],
   "details": {
     "intro": {
       "text": "intro.md",
       "background": "setup.sh"
     },
     "steps": [
-      {
-        "title": "Step 1: Network Setup",
-        "text": "step1/text.md"
-      },
-      {
-        "title": "Step 2: Traffic Analysis",
-        "text": "step2/text.md"
-      },
-      {
-        "title": "Step 3: Monitoring",
-        "text": "step3/text.md"
-      },
-      {
-        "title": "Step 4: Reporting",
-        "text": "step4/text.md"
-      }
+      { "title": "Setup Environment", "text": "step1/text.md", "verify": "step1/verify.sh" },
+      { "title": "Network Setup", "text": "step2/text.md", "verify": "step2/verify.sh" },
+      { "title": "Traffic Analysis", "text": "step3/text.md", "verify": "step3/verify.sh" },
+      { "title": "Monitoring", "text": "step4/text.md", "verify": "step4/verify.sh" },
+      { "title": "Reporting", "text": "step5/text.md", "verify": "step5/verify.sh" }
     ],
-    "finish": {
-      "text": "finish.md"
-    }
+    "finish": { "text": "finish.md" }
   },
   "backend": {
     "imageid": "kubernetes-kubeadm-1node-4GB"
