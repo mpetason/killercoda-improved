@@ -1,23 +1,21 @@
-# CI/CD Integration
+# Step 1 — Creating vCluster Snapshots
 
-In this step, we'll explore how to integrate vClusters with CI/CD pipelines.
+In this step, we'll create snapshots of our advanced vCluster to establish a backup strategy.
 
-vClusters are particularly useful for CI/CD environments where you want to test applications in isolated environments that mimic production:
+First, let's check our current vCluster setup:
+`vcluster list`{{exec}}
 
-`vcluster create test-env --namespace ci-cd --connect=false`{{exec}}
+Let's create a snapshot of our advanced vCluster:
+`vcluster snapshot create my-advanced-cluster "container:///tmp/my-snapshot.tar.gz" --include-volumes`{{exec}}
 
-Let's set up a basic CI/CD workflow:
-1. Create a vCluster for testing
-2. Deploy application to the vCluster
-3. Run tests
-4. Clean up the vCluster
+This command creates a snapshot of our vCluster including volumes. The `--include-volumes` flag ensures that persistent volume data is also backed up.
 
-We can also configure vCluster to automatically scale based on demand:
-`kubectl patch deployment vcluster-test-env -n ci-cd -p '{"spec":{"replicas":2}}'`{{exec}}
+Let's check the status of our snapshot creation:
+`vcluster snapshot get my-advanced-cluster "container:///tmp/my-snapshot.tar.gz"`{{exec}}
 
-This creates a replica of the vCluster controller to handle more load.
+The snapshot includes:
+- The vCluster's etcd datastore
+- Persistent volume data (when using --include-volumes)
+- All configuration and state information
 
-Let's check the deployment status:
-`kubectl get deployment vcluster-test-env -n ci-cd`{{exec}}
-
-CI/CD integration allows teams to have isolated test environments without the overhead of managing separate physical clusters.
+Snapshots are essential for disaster recovery as they capture the complete state of a vCluster at a specific point in time.

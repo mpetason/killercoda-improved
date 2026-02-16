@@ -1,20 +1,20 @@
-# Advanced vCluster Configuration
+# Step 1 — Configure Advanced vCluster Settings
 
-In this step, we'll explore advanced configuration options for vClusters.
+In this step, we'll configure advanced settings for our existing vCluster to optimize its behavior for production workloads.
 
-The vCluster CLI provides many flags and configuration options that allow you to customize your virtual cluster behavior. Let's look at some of the key configuration options:
-
-`vcluster create my-advanced-cluster --namespace team-x --kube-config /path/to/config --sync-all --disable-sync --log-level debug`{{exec}}
-
-This command shows several advanced options:
-- `--namespace` - Specifies the host cluster namespace where the vCluster will be created
-- `--kube-config` - Specifies a custom kubeconfig file
-- `--sync-all` - Syncs all resources (default behavior)
-- `--disable-sync` - Disables syncing of certain resources
-- `--log-level debug` - Sets the logging level to debug
-
-Let's check the current vCluster configuration:
+First, let's check our current vCluster configuration:
 `vcluster list`{{exec}}
 
-You can also get more detailed information about a specific vCluster:
-`vcluster get my-advanced-cluster -n team-x`{{exec}}
+We'll use the `--upgrade` flag to update our existing vCluster with advanced configuration options:
+`vcluster create my-advanced-cluster --namespace team-x --connect=false --upgrade --cpu-request 500m --memory-request 1Gi --cpu-limit 1000m --memory-limit 2Gi`{{exec}}
+
+This command updates our existing vCluster with:
+- CPU request of 500 millicores
+- Memory request of 1Gi
+- CPU limit of 1000 millicores
+- Memory limit of 2Gi
+
+Let's verify the updated configuration:
+`kubectl describe deployment vcluster-my-advanced-cluster -n team-x`{{exec}}
+
+The `--upgrade` flag is crucial for updating existing vClusters without having to recreate them, which is essential for production environments where you want to maintain uptime while making configuration changes.

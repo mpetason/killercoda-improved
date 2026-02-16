@@ -1,21 +1,22 @@
-# Resource Allocation and Performance Tuning
+# Step 2 — Resource Allocation and Performance Tuning
 
-In this step, we'll look at how to properly allocate resources to vClusters for optimal performance.
+In this step, we'll dive deeper into resource allocation and performance tuning for vClusters.
 
-When creating a vCluster, you can specify resource requests and limits for the vCluster components:
+Let's check the current resource usage of our vCluster:
+`kubectl top pods -n team-x`{{exec}}
 
-`vcluster create my-perf-cluster --namespace team-x --cpu-request 500m --memory-request 1Gi --cpu-limit 1000m --memory-limit 2Gi`{{exec}}
+We can also examine the resource requests and limits more closely:
+`kubectl get pods -n team-x -o yaml | grep -A 10 "resources"`{{exec}}
 
-This command sets:
-- CPU request to 500 millicores
-- Memory request to 1Gi
-- CPU limit to 1000 millicores
-- Memory limit to 2Gi
+Now let's update our vCluster with more specific resource settings for better performance:
+`vcluster create my-advanced-cluster --namespace team-x --connect=false --upgrade --cpu-request 750m --memory-request 2Gi --cpu-limit 1500m --memory-limit 4Gi`{{exec}}
 
-Let's check if the vCluster was created with the correct resource settings:
-`kubectl get pods -n team-x`{{exec}}
+These settings provide:
+- Higher CPU request for better performance
+- Increased memory request and limit
+- More generous resource allocation for production workloads
 
-We can also examine the vCluster's deployment configuration:
-`kubectl describe deployment vcluster-my-perf-cluster -n team-x`{{exec}}
+Let's verify our updated resource settings:
+`kubectl get deployment vcluster-my-advanced-cluster -n team-x -o yaml | grep -A 20 "resources"`{{exec}}
 
-Resource allocation is crucial for ensuring that vClusters don't consume excessive resources from the host cluster while still providing good performance to tenants.
+Proper resource allocation is crucial for ensuring that vClusters don't consume excessive resources from the host cluster while still providing good performance to tenants.

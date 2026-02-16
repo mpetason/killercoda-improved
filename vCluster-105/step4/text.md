@@ -1,21 +1,44 @@
-# Integration with Service Meshes
+# Step 4 — Disaster Recovery Planning
 
-In this final step, we'll explore how vClusters integrate with service meshes like Istio or Linkerd.
+In this final step, we'll explore comprehensive disaster recovery planning for vClusters.
 
-Service meshes provide important capabilities like traffic management, security, and observability. vClusters work well with these tools:
+Let's create a disaster recovery plan document:
+`mkdir -p /tmp/dr-plan`{{exec}}
 
-`vcluster create mesh-cluster --namespace mesh --sync-namespace-annotations`{{exec}}
+`echo "vCluster Disaster Recovery Plan
+=================
 
-Let's install Istio in our vCluster:
-`kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.18/samples/addons/istio.yaml`{{exec}}
+1. Identify the affected vCluster
+2. Check backup availability
+3. Determine recovery point objective (RPO)
+4. Perform restoration
+5. Validate restored environment
+6. Monitor post-restoration performance
 
-We can then deploy a sample application with Istio sidecars:
-`kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.18/samples/bookinfo/platform/kube/bookinfo.yaml`{{exec}}
+Key Contacts:
+- Platform Administrator: admin@company.com
+- vCluster Owner: owner@team-x.com
 
-Service mesh integration with vClusters provides:
-- Traffic management capabilities
-- Security features (mTLS, authorization)
-- Observability (metrics, logs, traces)
-- Service-to-service communication control
+Backup Schedule:
+- Daily snapshots: 23:00 UTC
+- Weekly full backups: Sunday 02:00 UTC
+- Monthly archival backups: First day of month 03:00 UTC
 
-This combination allows teams to implement advanced networking features while maintaining the isolation benefits of vClusters.
+Recovery Time Objective (RTO): 2 hours" > /tmp/dr-plan/recovery-plan.md`{{exec}}
+
+Let's also set up a simple backup monitoring script:
+`echo '#!/bin/bash
+echo "Checking vCluster backup status..."
+vcluster snapshot list my-advanced-cluster
+echo "Backup check completed at $(date)"' > /tmp/dr-plan/backup-monitor.sh`{{exec}}
+
+`chmod +x /tmp/dr-plan/backup-monitor.sh`{{exec}}
+
+A comprehensive disaster recovery plan includes:
+- Regular backup schedules
+- Clear restoration procedures
+- Testing of restoration processes
+- Documentation of all steps
+- Regular review and updates of the plan
+
+This ensures that your vCluster environments can be quickly and reliably recovered in case of emergencies.

@@ -1,0 +1,8 @@
+{
+  "title": "vCluster 109: External Secrets Integration",
+  "description": "Learn how to integrate External Secrets Operator with vCluster for secure secret management",
+  "difficulty": "Intermediate",
+  "time": "30",
+  "category": "vcluster",
+  "tags": ["vcluster", "secrets", "external-secrets", "security"]
+}
