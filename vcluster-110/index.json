@@ -2,7 +2,7 @@
   "title": "v110 - Monitoring and Observability",
   "description": "Learn how to set up monitoring and observability for vCluster environments using Prometheus and Grafana",
   "difficulty": "intermediate",
-  "time": 30,
+  "time": "30",
   "category": "Kubernetes",
   "tags": ["vcluster", "monitoring", "prometheus", "grafana", "observability", "cli"],
   "details": {

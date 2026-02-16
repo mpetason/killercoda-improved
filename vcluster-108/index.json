@@ -2,7 +2,7 @@
   "title": "v108 - Istio Ambient Mode",
   "description": "Learn how to deploy and configure Istio ambient mode in vCluster",
   "difficulty": "advanced",
-  "time": 60,
+  "time": "60",
   "category": "Kubernetes",
   "tags": ["vcluster", "istio", "ambient-mode", "traffic-management", "cli"],
   "details": {
