@@ -1,13 +1,26 @@
-# Setting up vCluster with External Secrets Integration
+# Setting up vCluster with Network Policies
 
-In this step, we'll create a vCluster configuration that includes External Secrets Operator integration.
+In this step, we'll create a vCluster and examine its default networking configuration.
 
-Let's examine the vCluster configuration with External Secrets:
+First, let's check that we have the vCluster CLI installed:
+
+```bash
+vcluster --version
+```
+
+If the command fails, please install vCluster CLI by following the instructions in the previous scenario.
+
+Next, let's create a basic vCluster configuration for our network policies lab:
+
+```bash
+mkdir -p ~/vcluster-network-policies
+cd ~/vcluster-network-policies
+```
+
+Let's create a simple vCluster configuration file:
 
 ```yaml
-# vcluster.yaml - vCluster configuration with External Secrets integration
-
-# Control plane configuration
+# vcluster.yaml - Basic vCluster configuration for network policies
 controlPlane:
   backingStore:
     etcd:
@@ -18,7 +31,6 @@ controlPlane:
     enabled: true
     host: vcluster-k8s-api.example.com
 
-# Resource synchronization settings
 sync:
   toHost:
     serviceAccounts:
@@ -29,14 +41,12 @@ sync:
       enabled: true
       clearImageStatus: true
 
-# Kubeconfig export configuration
 exportKubeConfig:
   context: my-vcluster-context
   server: https://vcluster-k8s-api.example.com
   secret:
     name: my-vcluster-kubeconfig
 
-# Policies configuration
 policies:
   resourceQuota:
     enabled: true
@@ -59,33 +69,79 @@ policies:
 
   networkPolicy:
     enabled: true
-
-# Integrations configuration
-integrations:
-  # External Secrets Operator integration
-  externalSecrets:
-    enabled: true
-    version: "0.9.0"  # Specify ESO version
-    # Additional ESO configuration
-    install:
-      values:
-        global:
-          proxy:
-            autoInject: enabled
-        controller:
-          resources:
-            requests:
-              cpu: "100m"
-              memory: "128Mi"
-            limits:
-              cpu: "200m"
-              memory: "256Mi"
 ```
 
-This configuration enables External Secrets Operator in the vCluster:
-1. Sets up ESO with a specific version
-2. Configures proper resource limits for the controller
-3. Enables automatic proxy injection
-4. Integrates with the vCluster's control plane
+Let's create this configuration file:
 
-Let's create this configuration file in our repository:
+```bash
+cat > vcluster.yaml << EOF
+# vcluster.yaml - Basic vCluster configuration for network policies
+controlPlane:
+  backingStore:
+    etcd:
+      embedded:
+        enabled: true
+
+  ingress:
+    enabled: true
+    host: vcluster-k8s-api.example.com
+
+sync:
+  toHost:
+    serviceAccounts:
+      enabled: true
+
+  fromHost:
+    nodes:
+      enabled: true
+      clearImageStatus: true
+
+exportKubeConfig:
+  context: my-vcluster-context
+  server: https://vcluster-k8s-api.example.com
+  secret:
+    name: my-vcluster-kubeconfig
+
+policies:
+  resourceQuota:
+    enabled: true
+    quota:
+      requests.cpu: "10"
+      requests.memory: "20Gi"
+      limits.cpu: "20"
+      limits.memory: "40Gi"
+      pods: "100"
+      services: "50"
+
+  limitRange:
+    enabled: true
+    default:
+      cpu: "500m"
+      memory: "512Mi"
+    defaultRequest:
+      cpu: "100m"
+      memory: "128Mi"
+
+  networkPolicy:
+    enabled: true
+EOF
+```
+
+This configuration enables network policies in the vCluster and sets up basic control plane settings.
+
+Let's deploy the vCluster:
+```bash
+vcluster create my-vcluster --kube-config ~/.kube/config --namespace my-vcluster
+```
+
+Once deployed, let's connect to the vCluster:
+```bash
+vcluster connect my-vcluster --namespace my-vcluster
+```
+
+After connecting, let's verify we're in the correct context:
+```bash
+kubectl config current-context
+```
+
+You should see something like `my-vcluster-context`.

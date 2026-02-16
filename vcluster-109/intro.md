@@ -6,15 +6,15 @@ vCluster lets teams run virtual Kubernetes clusters on existing host clusters, g
 
 ## What does this lab cover?
 
-In this lab we are going to cover how to use vCluster with external secrets management using External Secrets Operator (ESO). This scenario demonstrates how to securely manage secrets in vCluster environments by integrating with external secret stores like AWS Secrets Manager, HashiCorp Vault, or Kubernetes secrets.
+In this lab we are going to cover how to implement network policies in vCluster environments. This scenario demonstrates how to secure communication between pods within virtual clusters using Kubernetes Network Policies, which are a core part of Kubernetes networking and are completely open source.
 
 We will:
-- Set up a vCluster with External Secrets Operator integration
-- Configure external secret stores
-- Deploy applications that consume external secrets
-- Test secret synchronization and access
-- Implement security best practices for secret management
+- Set up a vCluster with default networking
+- Create network policies to control pod communication
+- Test network policy enforcement
+- Deploy applications and verify network isolation
+- Implement advanced network policy patterns
 
-This lab builds on the concepts learned in previous vCluster scenarios and demonstrates advanced usage patterns for secure secret management in virtual clusters.
+This lab builds on the concepts learned in previous vCluster scenarios and demonstrates how to secure virtual clusters using standard Kubernetes networking primitives.
 
-Thanks for checking this lab out. We think vCluster with External Secrets Operator integration is very powerful and would love to hear from you if you have any feedback.
+Thanks for checking this lab out. We think vCluster with proper network policies is very powerful and would love to hear from you if you have any feedback.

@@ -1,28 +1,27 @@
 # Congratulations! You've completed the vCluster 109 scenario.
 
-You've successfully implemented External Secrets Operator integration with vCluster. This implementation provides:
+You've successfully implemented network policies in vCluster environments. This implementation provides:
 
 ## What you've learned:
-- How to set up vCluster with External Secrets Operator integration
-- How to configure external secret stores (AWS, Vault)
-- How to deploy applications that consume external secrets
-- How to test and verify secret synchronization
-- How to implement security best practices for secret management
+- How to set up vCluster with network policy support
+- How to create basic network policies to control pod communication
+- How to implement advanced network policies with namespace and IP restrictions
+- How to test and verify network policy enforcement
+- How to apply security best practices for network isolation in virtual clusters
 
 ## Key features of your implementation:
-- **External Secrets Operator**: Automated secret synchronization from external stores
-- **Multi-provider Support**: Integration with AWS Secrets Manager and HashiCorp Vault
-- **Automatic Rotation**: Secrets automatically updated when external sources change
-- **Resource Management**: Proper configuration with resource quotas and limit ranges
-- **GitOps Integration**: Automated provisioning through CI/CD pipelines
-- **Security**: Proper access controls and secret management practices
+- **Network Policy Support**: Proper configuration with network policy enforcement
+- **Pod Isolation**: Control communication between pods using labels and namespaces
+- **Namespace-based Restrictions**: Allow traffic only from specific namespaces
+- **IP-based Restrictions**: Control access based on IP ranges
+- **Security Best Practices**: Implement proper network isolation in multi-tenant environments
 
 ## Usage patterns:
-1. **Automated Provisioning**: vClusters automatically created with External Secrets integration
-2. **Secure Secret Access**: Applications access secrets from external stores without exposing credentials
-3. **Centralized Management**: Secrets managed in one place and distributed to virtual clusters
-4. **Compliance**: Proper handling of sensitive data in multi-tenant environments
+1. **Basic Isolation**: Default network policies to allow all traffic
+2. **Label-based Access**: Restrict traffic based on pod labels
+3. **Namespace-based Access**: Control traffic between namespaces
+4. **IP-based Access Control**: Restrict access based on IP ranges
 
-This implementation provides a complete solution for managing secrets in vCluster environments using External Secrets Operator. The approach allows teams to maintain centralized secret management while keeping their applications isolated in virtual clusters, providing both security and operational efficiency.
+This implementation provides a complete solution for securing vCluster environments using standard Kubernetes network policies. The approach allows teams to maintain secure, isolated virtual clusters while leveraging the power of Kubernetes networking primitives.
 
-You can now extend this implementation with additional features like more complex secret transformations, custom secret stores, or advanced access control policies as needed for your specific use case.
+You can now extend this implementation with additional features like more complex network policy patterns, integration with service mesh, or advanced access control policies as needed for your specific use case.

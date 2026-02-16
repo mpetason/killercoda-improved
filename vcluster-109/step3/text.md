@@ -1,95 +1,77 @@
-# Configuring External Secrets Operator
+# Implementing Specific Network Policies
 
-In this step, we'll configure External Secrets Operator to work with our vCluster.
+In this step, we'll create more restrictive network policies to demonstrate how to control pod communication.
 
-Let's create an ExternalSecret that will sync secrets from an external store:
-
+Let's first create a more specific network policy that only allows traffic from pods with a specific label:
 ```yaml
-# external-secret.yaml - ExternalSecret configuration
-apiVersion: external-secrets.io/v1beta1
-kind: ExternalSecret
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
 metadata:
-  name: db-secret
+  name: allow-from-specific-pods
 spec:
-  secretStoreRef:
-    name: aws-secret-store
-    kind: ClusterSecretStore
-  target:
-    name: db-secret
-  data:
-  - secretKey: username
-    remoteRef:
-      key: myapp/db/username
-  - secretKey: password
-    remoteRef:
-      key: myapp/db/password
-```
+  podSelector:
+    matchLabels:
+      role: frontend
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          role: frontend
+` ``
 
-And let's create a SecretStore that defines our external secret source:
-
-```yaml
-# secret-store.yaml - SecretStore configuration for AWS
-apiVersion: external-secrets.io/v1beta1
-kind: ClusterSecretStore
+Let's create this policy:
+```bash
+cat > allow-from-specific-pods.yaml << EOF
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
 metadata:
-  name: aws-secret-store
+  name: allow-from-specific-pods
 spec:
-  provider:
-    aws:
-      service: SecretsManager
-      region: us-east-1
-      auth:
-        secretRef:
-          accessKeyIDSecretRef:
-            name: aws-credentials
-            key: access-key-id
-          secretAccessKeySecretRef:
-            name: aws-credentials
-            key: secret-access-key
----
-# aws-credentials.yaml - AWS credentials secret
-apiVersion: v1
-kind: Secret
-metadata:
-  name: aws-credentials
-type: Opaque
-data:
-  access-key-id: <base64-encoded-access-key>
-  secret-access-key: <base64-encoded-secret-key>
-```
+  podSelector:
+    matchLabels:
+      role: frontend
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          role: frontend
+EOF
 
-Let's also create a basic configuration for a HashiCorp Vault integration:
+kubectl apply -f allow-from-specific-pods.yaml
+` ``
 
-```yaml
-# vault-secret-store.yaml - SecretStore configuration for Vault
-apiVersion: external-secrets.io/v1beta1
-kind: ClusterSecretStore
-metadata:
-  name: vault-secret-store
-spec:
-  provider:
-    vault:
-      server: https://vault.example.com
-      path: secret
-      version: v2
-      auth:
-        token:
-          secretRef:
-            name: vault-token
-            key: token
----
-# vault-token.yaml - Vault token secret
-apiVersion: v1
-kind: Secret
-metadata:
-  name: vault-token
-type: Opaque
-data:
-  token: <base64-encoded-vault-token>
-```
+Now let's create a deployment with the matching label:
+```bash
+kubectl create deployment frontend --image=nginx --labels=role=frontend
+kubectl expose deployment frontend --port=80
+` ``
 
-These configurations will:
-1. Create ExternalSecrets that pull from external stores
-2. Set up ClusterSecretStore configurations for AWS and Vault
-3. Provide the necessary credentials for accessing external secret stores
-4. Define how secrets should be mapped to Kubernetes secrets
+Let's also create a deployment without the label to test our policy:
+```bash
+kubectl create deployment backend --image=nginx
+kubectl expose deployment backend --port=80
+` ``
+
+Let's check our pods:
+```bash
+kubectl get pods -l role=frontend
+kubectl get pods -l role=backend
+` ``
+
+Let's test connectivity from a pod with the frontend label to a pod without the label:
+```bash
+kubectl exec test-pod -- wget -qO- http://backend:80
+` ``
+
+This should fail because the backend pod doesn't have the required label to be allowed by our policy.
+
+Let's also test connectivity from a pod with the frontend label to a pod with the frontend label:
+```bash
+kubectl exec test-pod -- wget -qO- http://frontend:80
+` ``
+
+This should succeed because both pods have the appropriate labels.

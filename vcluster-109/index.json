@@ -1,8 +1,25 @@
 {
-  "title": "vCluster 109: External Secrets Integration",
-  "description": "Learn how to integrate External Secrets Operator with vCluster for secure secret management",
+  "title": "vCluster 109: Network Policies",
+  "description": "Learn how to implement network policies in vCluster environments for secure pod communication",
   "difficulty": "Intermediate",
   "time": "30",
   "category": "vcluster",
-  "tags": ["vcluster", "secrets", "external-secrets", "security"]
+  "tags": ["vcluster", "network-policies", "security", "kubernetes"],
+  "details": {
+    "intro": {
+      "text": "intro.md",
+      "background": "setup.sh"
+    },
+    "steps": [
+      { "title": "Setup Environment", "text": "step1/text.md", "verify": "step1/verify.sh" },
+      { "title": "Create Network Policies", "text": "step2/text.md", "verify": "step2/verify.sh" },
+      { "title": "Implement Specific Policies", "text": "step3/text.md", "verify": "step3/verify.sh" },
+      { "title": "Advanced Policy Patterns", "text": "step4/text.md", "verify": "step4/verify.sh" },
+      { "title": "Verify Integration", "text": "step5/text.md", "verify": "step5/verify.sh" }
+    ],
+    "finish": { "text": "finish.md" }
+  },
+  "backend": {
+    "imageid": "kubernetes-kubeadm-1node-4GB"
+  }
 }
