@@ -1,24 +1,19 @@
-# Testing and Staging Environments
+# Step 3 — Restoring vClusters from Backups
 
-In this step, we'll explore how to use vClusters for testing and staging environments.
+In this step, we'll demonstrate how to restore a vCluster from a backup, which is a critical part of disaster recovery.
 
-vClusters are excellent for creating isolated testing environments that can closely mimic production:
+First, let's see what's currently in our namespace:
+`kubectl get all -n team-x`{{exec}}
 
-`vcluster create staging-env --namespace staging --sync-namespace-annotations`{{exec}}
+Now, let's simulate a scenario where we need to restore our vCluster. First, we'll disconnect from the current vCluster:
+`vcluster disconnect`{{exec}}
 
-Let's deploy a sample application to the staging environment:
-`kubectl create deployment myapp --image=nginx:alpine -n staging`{{exec}}
+Let's try to restore our vCluster from the snapshot we created earlier:
+`vcluster restore my-advanced-cluster "container:///tmp/my-snapshot.tar.gz" --restore-volumes`{{exec}}
 
-We can scale the deployment:
-`kubectl scale deployment myapp --replicas=3 -n staging`{{exec}}
+This command restores the vCluster from our local snapshot and includes volume restoration. The `--restore-volumes` flag ensures that persistent data is also restored.
 
-For testing purposes, we can also set up monitoring:
-`kubectl apply -f https://raw.githubusercontent.com/loft-sh/vcluster/main/docs/monitoring/prometheus.yaml -n staging`{{exec}}
+After restoration, let's verify our vCluster is running:
+`vcluster list`{{exec}}
 
-Testing environments created with vClusters:
-- Are isolated from production
-- Can run different versions of applications
-- Are easy to spin up and tear down
-- Provide consistent testing conditions
-
-This approach is particularly useful for teams that need to test multiple versions of their applications.
+Restoring from backups is crucial for disaster recovery and ensures business continuity in case of unexpected failures or data corruption.

@@ -1,24 +1,23 @@
-# Developer Sandbox Environments
+# Step 2 — Advanced Backup Strategies
 
-In this step, we'll look at how vClusters can be used to create developer sandbox environments.
+In this step, we'll explore more advanced backup strategies for vClusters, including cloud-based storage options.
 
-Developers can benefit from having their own isolated environments where they can experiment without affecting other teams:
+Let's create another snapshot but this time to an OCI registry (which requires proper credentials):
+`vcluster snapshot create my-advanced-cluster "oci://ghcr.io/my-organization/my-vcluster-backup:latest" --include-volumes`{{exec}}
 
-`vcluster create dev-sandbox --namespace developers --connect=false`{{exec}}
+This command creates a snapshot and pushes it to an OCI registry. This approach is useful for:
+- Centralized backup storage
+- Version control of backups
+- Sharing backups across teams
+- Long-term retention
 
-Let's create a simple deployment in this sandbox:
-`kubectl create deployment nginx --image=nginx -n developers`{{exec}}
+Let's also check what snapshots we have available:
+`vcluster snapshot list my-advanced-cluster`{{exec}}
 
-We can then expose this deployment:
-`kubectl expose deployment nginx --port=80 -n developers`{{exec}}
+For production environments, you should consider:
+- Regular snapshot schedules
+- Multiple backup locations
+- Testing backup restoration procedures
+- Retention policies for old backups
 
-To access the sandbox environment:
-`kubectl port-forward service/nginx 8080:80 -n developers`{{exec}}
-
-Developer sandboxes provide:
-- Isolated environments for experimentation
-- No risk of affecting other teams
-- Easy to create and destroy
-- Cost-effective compared to separate physical clusters
-
-This approach is particularly valuable for teams that want to provide self-service access to Kubernetes while maintaining control.
+These backup strategies ensure that you can recover your vCluster environments in case of data loss or system failures.

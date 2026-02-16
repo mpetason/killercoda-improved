@@ -11,4 +11,16 @@ fi
 # Verify installation
 vcluster version
 
-echo "vCluster CLI already installed"
+# Create the namespace and vCluster needed for this scenario (if they don't exist)
+kubectl create namespace team-x &> /dev/null || true
+
+# Create a basic vCluster for this scenario
+if ! vcluster list | grep -q "my-advanced-cluster"; then
+    echo "Creating basic vCluster for backup scenario..."
+    vcluster create my-advanced-cluster --namespace team-x --connect=false
+fi
+
+# Create a directory for snapshots
+mkdir -p /tmp/snapshots
+
+echo "vCluster CLI installed and basic vCluster ready for backup operations"

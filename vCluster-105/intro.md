@@ -1,12 +1,11 @@
-# Welcome to vCluster 105 — Practical Use Cases and Integration Patterns
+# Welcome to vCluster 105 — Backup and Disaster Recovery
 
-In this final scenario of our learning series, we'll explore practical real-world use cases for vClusters and how they integrate with common Kubernetes workflows and tools.
+In this scenario, we'll explore backup and disaster recovery strategies for vClusters, building on the advanced configuration concepts from vCluster 104.
 
-We'll cover:
-- How to use vClusters in CI/CD pipelines
-- Creating developer sandbox environments
-- Setting up testing and staging environments
-- Integration with service meshes and other Kubernetes tools
-- Backup and disaster recovery strategies
+We'll build on the advanced vCluster configuration we've been working with to:
+- Create snapshots of vClusters
+- Restore vClusters from backups
+- Implement disaster recovery procedures
+- Manage backup strategies for production environments
 
-This scenario demonstrates how vCluster can be used in actual production environments to solve real-world multi-tenancy challenges.
+This scenario focuses on ensuring your vCluster environments can be protected and recovered in case of failures.
