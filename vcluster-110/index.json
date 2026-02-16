@@ -11,11 +11,11 @@
       "background": "setup.sh"
     },
     "steps": [
-      { "title": "Setup Environment", "text": "step1/text.md", "verify": "step1/verify.sh" },
-      { "title": "Install Prometheus", "text": "step2/text.md", "verify": "step2/verify.sh" },
-      { "title": "Configure Prometheus for vCluster", "text": "step3/text.md", "verify": "step3/verify.sh" },
-      { "title": "Install Grafana", "text": "step4/text.md", "verify": "step4/verify.sh" },
-      { "title": "Create Dashboards and Alerts", "text": "step5/text.md", "verify": "step5/verify.sh" }
+      { "title": "Setup Environment", "text": "step1/text.md" },
+      { "title": "Install Prometheus", "text": "step2/text.md" },
+      { "title": "Configure Prometheus for vCluster", "text": "step3/text.md" },
+      { "title": "Install Grafana", "text": "step4/text.md" },
+      { "title": "Create Dashboards and Alerts", "text": "step5/text.md" }
     ],
     "finish": { "text": "finish.md" }
   },
