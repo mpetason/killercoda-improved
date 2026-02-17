@@ -1,2 +1,2 @@
 #!/bin/bash
-vcluster list 2>/dev/null | grep -q backup-demo; [ $? -ne 0 ] && echo "done"
+vcluster connect backup-demo &> /dev/null && kubectl get deployment nginx &> /dev/null; result=$?; vcluster disconnect &> /dev/null; [ $result -ne 0 ] && echo "done"

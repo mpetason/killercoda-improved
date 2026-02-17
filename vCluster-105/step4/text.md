@@ -1,21 +1,39 @@
-# Simulate Disaster — Delete vCluster
+# Simulate Disaster — Delete Workloads Inside vCluster
 
-Now let's simulate a disaster by completely deleting the vCluster. This removes all virtual cluster resources from the host.
+Now let's simulate a disaster by deleting all the workloads inside the vCluster. Since our snapshot is stored on the vCluster's PVC using `container://`, we'll keep the vCluster itself running and instead destroy the resources inside it.
 
-## Delete the vCluster
+## Connect to the vCluster
 
-`vcluster delete backup-demo`{{exec}}
+`vcluster connect backup-demo`{{exec}}
+
+## Verify Current State
+
+Before we break things, confirm everything is running:
+
+`kubectl get deployments,services,configmaps,secrets`{{exec}}
+
+## Delete Everything
+
+Delete all workloads in the default namespace to simulate accidental deletion or corruption:
+
+`kubectl delete deployment --all`{{exec}}
+
+`kubectl delete service nginx`{{exec}}
+
+`kubectl delete configmap app-config`{{exec}}
+
+`kubectl delete secret app-secret`{{exec}}
 
 ## Verify Destruction
 
-`vcluster list`{{exec}}
+`kubectl get deployments,services,configmaps,secrets`{{exec}}
 
-`kubectl get all -n backup-ns`{{exec}}
+The nginx deployment, service, configmap, and secret are gone. Only default Kubernetes resources (like the `kubernetes` service) remain.
 
-The vCluster and all its resources are gone. In a real disaster, this could happen due to accidental deletion, namespace cleanup, or infrastructure failure.
+In a real scenario, this could happen due to an accidental `kubectl delete`, a faulty CI/CD pipeline, or a misconfigured operator wiping out resources.
 
-## Verify Our Backups Still Exist
+## Disconnect
 
-`ls -la /root/backup-all.yaml /root/vcluster-backup.tar.gz`{{exec}}
+`vcluster disconnect`{{exec}}
 
-Our backup files are safe on the local filesystem. In production, these would be stored in object storage (S3, GCS), a backup service, or a version control system.
+Our snapshot is still safely stored on the vCluster's PVC. Let's restore from it.

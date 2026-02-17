@@ -1,32 +1,35 @@
-# Export Resources as YAML Backup
+# Create a Snapshot
 
-The simplest backup method is exporting Kubernetes resource definitions as YAML files. This captures the declarative state of your workloads.
+vCluster has a built-in `vcluster snapshot` command that captures the complete state of a virtual cluster — including the backing store data (etcd or SQLite), Helm release information, and `vcluster.yaml` configuration.
 
-## Export All Resources
+## Disconnect from the vCluster
 
-Export deployments, services, configmaps, and secrets from the default namespace:
+Before creating a snapshot, disconnect from the vCluster so the commands run against the host cluster:
 
-`kubectl get deployments -o yaml > /root/backup-deployments.yaml`{{exec}}
+`vcluster disconnect`{{exec}}
 
-`kubectl get services -o yaml > /root/backup-services.yaml`{{exec}}
+## Create the Snapshot
 
-`kubectl get configmaps -o yaml > /root/backup-configmaps.yaml`{{exec}}
+We'll use the `container://` protocol, which saves the snapshot to a local path within the vCluster's PersistentVolume. This is convenient for learning since it requires no external storage.
 
-`kubectl get secrets -o yaml > /root/backup-secrets.yaml`{{exec}}
+`vcluster snapshot create backup-demo "container:///data/snapshot.tar.gz"`{{exec}}
 
-## Combine Into a Single Backup File
+Let's break down this command:
 
-`cat /root/backup-deployments.yaml /root/backup-services.yaml /root/backup-configmaps.yaml /root/backup-secrets.yaml > /root/backup-all.yaml`{{exec}}
+- `vcluster snapshot create` — creates a new snapshot
+- `backup-demo` — the name of the vCluster to snapshot
+- `"container:///data/snapshot.tar.gz"` — the destination URL using the `container://` protocol, which writes to a path inside the vCluster's own PVC
 
-## Verify the Backup
+## Check the Snapshot Status
 
-`ls -la /root/backup-*.yaml`{{exec}}
+`vcluster snapshot get backup-demo "container:///data/snapshot.tar.gz"`{{exec}}
 
-`head -20 /root/backup-all.yaml`{{exec}}
+The status should show the snapshot as completed. The snapshot captures the full control plane state, so all deployments, services, configmaps, secrets, and other resources are included.
 
-## Important Notes
+## What Gets Captured
 
-- YAML export captures **resource definitions** but not stateful data (database contents, PVC data)
-- The exported YAML includes cluster-specific metadata (UIDs, resourceVersion) that will be regenerated on restore
-- For a complete backup of stateful applications, you would also need to back up PersistentVolume data
-- This method is best for **declarative workloads** where the resource definitions are the source of truth
+A `vcluster snapshot` includes:
+
+- **Backing store data** — the complete etcd or SQLite database
+- **Helm release info** — so the vCluster can be recreated with the same configuration
+- **vcluster.yaml config** — the values used to create the vCluster

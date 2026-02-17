@@ -1,6 +1,6 @@
 {
   "title": "v105 - Backup and Disaster Recovery",
-  "description": "Learn how to back up and restore vClusters using YAML export and data store backup.",
+  "description": "Learn how to back up and restore vClusters using the built-in vcluster snapshot command.",
   "details": {
     "intro": {
       "text": "intro.md",
@@ -13,22 +13,22 @@
         "verify": "step1/verify.sh"
       },
       {
-        "title": "Export Resources as YAML Backup",
+        "title": "Create a Snapshot",
         "text": "step2/text.md",
         "verify": "step2/verify.sh"
       },
       {
-        "title": "Back Up the vCluster Data Store",
+        "title": "Explore Snapshot Options",
         "text": "step3/text.md",
         "verify": "step3/verify.sh"
       },
       {
-        "title": "Simulate Disaster - Delete vCluster",
+        "title": "Simulate Disaster — Delete Workloads",
         "text": "step4/text.md",
         "verify": "step4/verify.sh"
       },
       {
-        "title": "Restore from Backup",
+        "title": "Restore from Snapshot",
         "text": "step5/text.md",
         "verify": "step5/verify.sh"
       },

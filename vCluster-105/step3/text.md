@@ -1,33 +1,42 @@
-# Back Up the vCluster Data Store
+# Explore Snapshot Options
 
-For a more complete backup, we can back up the vCluster's underlying data store. The default k3s-based vCluster uses an embedded SQLite database stored within the vCluster pod.
+Now that you've created a snapshot, let's explore the different storage protocols and options available for production use.
 
-## Disconnect from the vCluster
+## Review the Snapshot
 
-`vcluster disconnect`{{exec}}
+Check the snapshot status again:
 
-## Identify the vCluster Pod
+`vcluster snapshot get backup-demo "container:///data/snapshot.tar.gz"`{{exec}}
 
-`kubectl get pods -n backup-ns -l app=vcluster`{{exec}}
+## Storage Protocols
 
-## Back Up the Data Store
+The `container://` protocol we used stores the snapshot on the vCluster's own PVC. This is great for quick backups but has a limitation — if the PVC is deleted, the snapshot is lost too.
 
-The vCluster's data is stored in a PersistentVolume. Let's identify it:
+For production environments, vCluster supports additional protocols:
 
-`kubectl get pvc -n backup-ns`{{exec}}
+| Protocol | Example URL | Use Case |
+|----------|------------|----------|
+| `container://` | `container:///data/snapshot.tar.gz` | Local backup on vCluster PVC — simple, no external dependencies |
+| `s3://` | `s3://my-bucket/backups/snapshot.tar.gz` | AWS S3 or S3-compatible storage — durable, off-cluster |
+| `oci://` | `oci://registry.example.com/snapshots:v1` | OCI-compatible container registries — versioned, portable |
 
-We can copy the data from the vCluster pod. The k3s data store is located at `/data/server/db/` inside the pod:
+## Including Persistent Volumes
 
-`kubectl cp backup-ns/$(kubectl get pod -n backup-ns -l app=vcluster -o jsonpath='{.items[0].metadata.name}'):/data /root/vcluster-data-backup`{{exec}}
+By default, snapshots only capture the control plane state. If your vCluster runs stateful workloads with CSI-backed PersistentVolumes, you can include volume data:
 
-## Create a Compressed Archive
+```
+vcluster snapshot create my-vcluster "s3://bucket/snapshot.tar.gz" --include-volumes
+```
 
-`tar czf /root/vcluster-backup.tar.gz -C /root vcluster-data-backup`{{exec}}
+The `--include-volumes` flag triggers CSI volume snapshots for all PVCs in the vCluster, bundling the data with the control plane snapshot.
 
-## Verify the Backup
+## Snapshot vs. Other Backup Methods
 
-`ls -la /root/vcluster-backup.tar.gz`{{exec}}
+| Method | Scope | External Tools Needed |
+|--------|-------|----------------------|
+| `vcluster snapshot` | Full control plane + optional volumes | None (built-in) |
+| YAML export (`kubectl get -o yaml`) | Resource definitions only | None |
+| Velero | Resources + PV data | Velero install + storage |
+| GitOps (ArgoCD/Flux) | Declarative state in git | GitOps tooling |
 
-`tar tzf /root/vcluster-backup.tar.gz | head -10`{{exec}}
-
-This data store backup captures the complete state of the vCluster's control plane, including all resource definitions, RBAC, and cluster configuration.
+The built-in snapshot is the recommended approach for most vCluster backup scenarios because it captures everything needed to fully restore the virtual cluster.

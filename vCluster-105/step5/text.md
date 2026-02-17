@@ -1,24 +1,27 @@
-# Restore from Backup
+# Restore from Snapshot
 
-Let's restore our workloads by creating a new vCluster and re-applying the YAML backup.
+Now let's use `vcluster restore` to recover the vCluster to the state captured in our snapshot.
 
-## Create a New vCluster
+## Restore the Snapshot
 
-`vcluster create backup-demo --namespace backup-ns`{{exec}}
+`vcluster restore backup-demo "container:///data/snapshot.tar.gz"`{{exec}}
 
-## Re-apply the YAML Backup
+The restore process:
 
-We'll apply the individual backup files. Using individual files gives better control over the restore order:
+1. **Pauses** the vCluster
+2. **Scales** all vCluster pods to zero
+3. **Runs a restore pod** that replaces the backing store data with the snapshot contents
+4. **Resumes** the vCluster with the restored state
 
-`kubectl apply -f /root/backup-configmaps.yaml`{{exec}}
+This may take a minute to complete as the vCluster restarts.
 
-`kubectl apply -f /root/backup-secrets.yaml`{{exec}}
+## Connect and Verify
 
-`kubectl apply -f /root/backup-deployments.yaml`{{exec}}
+Connect to the restored vCluster:
 
-`kubectl apply -f /root/backup-services.yaml`{{exec}}
+`vcluster connect backup-demo`{{exec}}
 
-## Verify the Restore
+Check that the workloads are back:
 
 `kubectl get deployments`{{exec}}
 
@@ -26,13 +29,18 @@ We'll apply the individual backup files. Using individual files gives better con
 
 `kubectl get configmaps`{{exec}}
 
+`kubectl get secrets`{{exec}}
+
+Wait for the pods to be running:
+
 `kubectl get pods`{{exec}}
 
-You should see the nginx deployment running with 2 replicas, the service, and the configmap — all restored from the YAML backup.
+You should see the nginx deployment with 2 replicas, the nginx service, the `app-config` configmap, and the `app-secret` secret — all restored from the snapshot.
 
-## Important Notes
+## Verify Data Integrity
 
-- Some resources may show warnings about already-existing defaults (like the `kubernetes` service) — these can be ignored
-- The restored resources get new UIDs and metadata, but the functional configuration is preserved
-- Stateful data (PVC contents) is not restored by this method — only resource definitions
-- For full state recovery including the data store, you would restore the PVC data from the data store backup created in Step 3
+Check that the configmap data was preserved:
+
+`kubectl get configmap app-config -o jsonpath='{.data}'`{{exec}}
+
+The original values (`environment=production`, `log_level=info`) should be intact, confirming that the full control plane state was restored.
