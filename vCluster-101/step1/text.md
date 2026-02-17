@@ -1,4 +1,4 @@
-# Install vCluster CLI
+# Step 1 — Install vCluster CLI
 
 Before we begin working with virtual clusters, let's install the vCluster CLI. This tool will allow us to create, connect to, and manage virtual Kubernetes clusters throughout the lab:
 

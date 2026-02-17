@@ -1,4 +1,4 @@
-# Cleanup
+# Step 6 — Cleanup
 
 Let's clean up the vCluster and configuration files.
 

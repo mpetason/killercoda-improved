@@ -1,4 +1,4 @@
-# Install OPA Gatekeeper in vCluster
+# Step 6 — Install OPA Gatekeeper in vCluster
 
 Inside the vCluster, tenants can run a different policy engine to manage policies using its own CRDs. This shows that host and vCluster can run different tools with similar responsibilities.
 

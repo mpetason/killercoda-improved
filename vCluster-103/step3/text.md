@@ -1,4 +1,4 @@
-# Install Cert-Manager CRD on Host
+# Step 3 — Install Cert-Manager CRD on Host
 
 In this step, we simulate a real-world scenario where the platform team installs Cert-Manager at the cluster level.
 

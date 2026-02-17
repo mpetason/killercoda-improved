@@ -1,4 +1,4 @@
-# Deploy a vCluster
+# Step 2 — Deploy a vCluster
 
 Before we deploy the vCluster let's take a look at the namespaces and CRDs on the host cluster. Since a vCluster creates a new virtual kubernetes cluster, we're going to get a brand new API endpoint with a database backing it. This means that we will have different namespaces, CRDs, and other resources that are not 1:1 with the host cluster.
 

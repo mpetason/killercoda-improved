@@ -1,4 +1,4 @@
-# Configuration with vcluster.yaml
+# Step 1 — Configuration with vcluster.yaml
 
 The `vcluster.yaml` file is the central configuration source for a vCluster. It controls everything from the control plane architecture to resource sync behavior.
 
@@ -6,22 +6,7 @@ If no `vcluster.yaml` is provided, vCluster applies defaults: embedded SQLite da
 
 ## Create a Custom Configuration
 
-Let's create a `vcluster.yaml` that customizes our vCluster. Here's the configuration we'll use:
-
-```yaml
-sync:
-  toHost:
-    ingresses:
-      enabled: true
-  fromHost:
-    nodes:
-      enabled: true
-```
-
-- **`sync.toHost.ingresses.enabled`** — Syncs ingress resources from the vCluster to the host cluster so they can be served by the host's ingress controller.
-- **`sync.fromHost.nodes.enabled`** — Syncs real node information into the vCluster instead of creating fake nodes.
-
-Copy the YAML to your clipboard by clicking below:
+Let's create a `vcluster.yaml` that customizes our vCluster. Copy the configuration below:
 
 `sync:
   toHost:
@@ -31,11 +16,14 @@ Copy the YAML to your clipboard by clicking below:
     nodes:
       enabled: true`{{copy}}
 
-Open the **Editor** tab, create a new file at `/root/vcluster.yaml`, and paste the content.
+- **`sync.toHost.ingresses.enabled`** — Syncs ingress resources from the vCluster to the host cluster so they can be served by the host's ingress controller.
+- **`sync.fromHost.nodes.enabled`** — Syncs real node information into the vCluster instead of creating fake nodes.
+
+Open the **Editor** tab and save this as `vcluster.yaml`.
 
 ## Create a vCluster with Custom Config
 
-`vcluster create config-demo --namespace config-ns --values /root/vcluster.yaml`{{exec}}
+`vcluster create config-demo --namespace config-ns --values vcluster.yaml`{{exec}}
 
 Verify the vCluster is running:
 

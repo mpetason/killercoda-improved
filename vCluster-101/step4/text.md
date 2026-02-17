@@ -1,4 +1,4 @@
-# Create a Deployment
+# Step 4 — Create a Deployment
 
 Next we will create an NGINX deployment in the vCluster.
 

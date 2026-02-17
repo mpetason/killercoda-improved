@@ -1,4 +1,4 @@
-# Sync Configuration
+# Step 3 — Sync Configuration
 
 vCluster syncs resources between the virtual cluster and the host cluster. Understanding and configuring sync behavior is key to a well-functioning vCluster.
 

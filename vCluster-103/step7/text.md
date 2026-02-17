@@ -1,4 +1,4 @@
-# Cleanup and Summary
+# Step 7 — Cleanup and Summary
 
 Let's clean up by deleting the vCluster.
 

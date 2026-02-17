@@ -1,4 +1,4 @@
-# Install a Different Cert-Manager Version in the vCluster
+# Step 4 — Install a Different Cert-Manager Version in the vCluster
 
 Inside the vCluster, we can install a **completely different version** of Cert-Manager without impacting the host cluster. This demonstrates how teams can test upgrades or run legacy versions independently.
 

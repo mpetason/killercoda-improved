@@ -1,4 +1,4 @@
-# Inspect the vCluster
+# Step 3 — Inspect the vCluster
 
 Now that the vCluster has been created and we are connected we can take a look at the current context we are using.
 
