@@ -2,16 +2,17 @@
 
 You learned:
 
-- How to export vCluster resources as YAML backups
-- How to back up the vCluster data store
-- How to restore a vCluster from a YAML backup
+- How to create snapshots with `vcluster snapshot create`
+- How to check snapshot status with `vcluster snapshot get`
+- The different storage protocols: `container://`, `s3://`, and `oci://`
+- How to restore a vCluster from a snapshot with `vcluster restore`
 - DR planning considerations for production environments
 
 ### Next Steps
 
-Learn more about vCluster:
+Learn more about vCluster backup and restore:
 
-https://www.vcluster.com/docs/vcluster/
+https://www.vcluster.com/docs/vcluster/manage/backup-restore/backup
 
 Join the community:
 

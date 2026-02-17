@@ -1,2 +1,2 @@
 #!/bin/bash
-test -f /root/backup-all.yaml && echo "done"
+vcluster snapshot get backup-demo "container:///data/snapshot.tar.gz" &> /dev/null && echo "done"
