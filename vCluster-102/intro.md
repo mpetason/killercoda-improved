@@ -1,21 +1,14 @@
-# vCluster 102 - Multi-Tenancy Isolation
+# vCluster 102 — Multi-Tenancy Isolation
 
-## What is vCluster?
+In this scenario we are going to deploy two applications, using the same deployment YAML and naming. Since we are deploying each in its own vCluster, it doesn't matter if the naming overlaps. We are even going to deploy to the default namespace in each vCluster.
 
-vCluster lets teams run virtual Kubernetes clusters on existing host clusters, giving each tenant an isolated control plane without creating separate physical clusters. It supports tenancy models from simple namespace isolation to fully dedicated nodes, GPUs, and bare metal. Environments are defined declaratively for easy, repeatable provisioning. By consolidating many virtual clusters onto fewer hosts, teams cut Kubernetes costs and simplify multi-tenant operations.
+This short scenario shows how vCluster prevents name conflicts. Two tenants can deploy the same application and service names and run them independently because each vCluster has its own control plane and API.
 
-![vCluster Multi-Tenancy](./assets/multi-tenancy.png)
+What you'll do:
 
-## What You'll Learn
+- Create two vClusters (`my-vcluster-a` in `team-x` and `my-vcluster-b` in `team-y`)
+- Deploy the same `my-app` Deployment and Service in each vCluster
+- Expose each service (Port-Forwarding)
+- Verify both services work without interfering with each other
 
-In this scenario, you'll explore how vCluster enables true multi-tenancy by allowing multiple tenants to run the same application names without conflicts.
-
-## What This Lab Covers
-
-- Creating multiple vClusters in separate namespaces
-- Deploying identical applications in different vClusters
-- Exposing applications via port-forwarding
-- Verifying independent access to each application
-- Understanding how vCluster provides true isolation
-
-This scenario demonstrates how vCluster enables you to share the same Kubernetes cluster while maintaining complete isolation between tenants.
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=a845cc0a-5bb1-4264-807e-20b6a5db69fa" />

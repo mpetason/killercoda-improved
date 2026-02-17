@@ -1,6 +1,6 @@
 # Step 1 — Create two vClusters
 
-In this step, we'll create two vClusters in separate namespaces. This demonstrates how vCluster enables multi-tenancy by providing isolated control planes for each tenant.
+Create two vClusters in separate namespaces. We'll name them `my-vcluster-a` in the `team-x` namespace and `my-vcluster-b` in the `team-y` namespace.
 
 `kubectl create namespace team-x`{{exec}}
 
@@ -10,14 +10,6 @@ In this step, we'll create two vClusters in separate namespaces. This demonstrat
 
 `vcluster create --connect=false my-vcluster-b --namespace team-y`{{exec}}
 
-Verify both are running with `vcluster list`{{exec}}
+Verify both are running:
 
-## Why This Matters
-
-Creating vClusters in separate namespaces is a common pattern for multi-tenancy:
-- Each vCluster gets its own isolated control plane
-- Namespaces provide logical separation at the host cluster level
-- The `--connect=false` flag creates the vCluster without automatically connecting to it
-- This allows you to manage multiple vClusters from the same host cluster
-
-This pattern is essential for organizations that want to provide isolated Kubernetes environments to different teams or projects.
+`vcluster list`{{exec}}

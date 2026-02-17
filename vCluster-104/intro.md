@@ -1,20 +1,19 @@
-# Welcome to vCluster 104 — Advanced Configuration and Performance Optimization
+# Welcome to vCluster 104 — Advanced Configuration
 
-## What is vCluster?
+Every vCluster can be customized through a `vcluster.yaml` configuration file. This file controls everything from the control plane architecture to resource sync behavior between the virtual and host clusters.
 
-vCluster lets teams run virtual Kubernetes clusters on existing host clusters, giving each tenant an isolated control plane without creating separate physical clusters. It supports tenancy models from simple namespace isolation to fully dedicated nodes, GPUs, and bare metal. Environments are defined declaratively for easy, repeatable provisioning. By consolidating many virtual clusters onto fewer hosts, teams cut Kubernetes costs and simplify multi-tenant operations.
+In this scenario we will cover:
 
-## What You'll Learn
+- Creating vClusters with custom `vcluster.yaml` configurations
+- Setting resource limits and requests on the vCluster control plane
+- Configuring sync behavior for different resource types
+- Understanding control plane distro and backing store options
+- Monitoring vCluster resource consumption
 
-In this scenario, we'll continue our journey with vCluster by exploring advanced configuration options and performance optimization techniques that are essential for production environments.
+By the end, you will understand how to configure vClusters for different environments and requirements.
 
-We'll build on what we've learned in previous scenarios to:
-- Configure vClusters with advanced settings
-- Optimize performance for different workloads
-- Set up monitoring and observability
-- Implement network optimization strategies
-- Scale vClusters for production use
+If you need help, join the community Slack:
 
-## What This Lab Covers
+https://slack.vcluster.com
 
-This scenario assumes you have a basic vCluster running from previous scenarios.
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=a845cc0a-5bb1-4264-807e-20b6a5db69fa" />

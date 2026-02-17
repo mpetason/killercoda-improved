@@ -1,8 +1,0 @@
-# .gitignore
-
-# Exclude docs, scripts, and ownership files
-assigned_owners.md
-docs/
-scripts/
-team_assignments.md
-.claude/

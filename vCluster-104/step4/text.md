@@ -1,21 +1,65 @@
-# Step 4 — Network Optimization
+# Control Plane Options
 
-In this final step, we'll explore network optimization techniques for vClusters to ensure good connectivity while maintaining isolation.
+vCluster supports different control plane configurations to match your requirements.
 
-Let's first check our current network configuration:
-`kubectl get configmap -n team-x`{{exec}}
+## Distro Options
 
-We can optimize network settings by specifying a custom network plugin:
-`vcluster create my-advanced-cluster --namespace team-x --connect=false --upgrade --network-plugin cni`{{exec}}
+vCluster can use different Kubernetes distributions for the virtual control plane:
 
-This sets the network plugin to CNI for better network performance and compatibility.
+- **k8s** — Full Kubernetes with kube-apiserver, kube-controller-manager, and etcd
+- **k3s** — Lightweight Kubernetes (default) with embedded SQLite
+- **k0s** — Zero-friction Kubernetes distribution
+- **eks** — Amazon EKS distribution
 
-We can also configure service CIDR ranges for better network organization:
-`vcluster create my-advanced-cluster --namespace team-x --connect=false --upgrade --service-cidr 10.96.0.0/12`{{exec}}
+The distro is set at creation time and **cannot be changed** after deployment.
 
-Additionally, let's enable namespace annotation synchronization:
-`vcluster create my-advanced-cluster --namespace team-x --connect=false --upgrade --sync-namespace-annotations`{{exec}}
+### Example: k8s distro configuration
 
-These network optimization techniques help ensure that vClusters have good connectivity while maintaining proper isolation between tenants and optimizing resource usage.
+```yaml
+controlPlane:
+  distro:
+    k8s:
+      enabled: true
+```
 
-Network optimization is particularly important in multi-tenant environments where different teams might have different networking requirements.
+## Backing Store Options
+
+The backing store determines where the vCluster stores its data:
+
+- **Embedded SQLite** (default for k3s) — Simple, no additional components needed
+- **Embedded etcd** — Distributed, production-ready
+- **External etcd** — Separate etcd cluster for high availability
+
+### Example: embedded etcd configuration
+
+```yaml
+controlPlane:
+  backingStore:
+    etcd:
+      embedded:
+        enabled: true
+```
+
+## Persistence Options
+
+By default, vCluster uses a PersistentVolumeClaim to store data. For testing, you can use an emptyDir:
+
+```yaml
+controlPlane:
+  statefulSet:
+    persistence:
+      volumeClaim:
+        enabled: false
+```
+
+**Note:** Using emptyDir means data is lost when the pod restarts. Only use this for testing.
+
+## View Current Configuration
+
+Let's check the current vCluster's control plane configuration:
+
+`kubectl get statefulset -n config-ns -o yaml | head -50`{{exec}}
+
+`kubectl get pvc -n config-ns`{{exec}}
+
+You can see the PersistentVolumeClaim that stores the vCluster's data and the statefulset running the control plane.

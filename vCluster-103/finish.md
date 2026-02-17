@@ -1,40 +1,24 @@
-# Congratulations on completing vCluster 103!
+# Congratulations! You've completed the vCluster 103 Scenario.
 
-You've successfully completed the advanced CRD management scenario for vCluster. You've learned how vCluster enables sophisticated CRD management and tenancy models:
+You learned:
 
-1. **CRD Isolation**: You understood how vCluster provides complete CRD isolation from the host cluster
-2. **Different CRD Versions**: You learned how to install different CRD versions in vClusters vs host
-3. **Custom Resource Creation**: You deployed and managed custom resources in vClusters
-4. **CRD Comparison**: You compared CRDs between host and vCluster environments
-5. **Cleanup**: You properly cleaned up resources
+- Why Namespaces may not be enough for CRD isolation
+- How vCluster isolates control planes and CRDs
+- How host and vCluster CRDs can differ safely
+- How to install alternate policy engines inside virtual clusters
 
-## What You've Learned
+### Next Steps
 
-- vCluster provides true control plane isolation at the CRD level
-- Each vCluster can have its own CRD ecosystem without affecting the host
-- Different teams can use different CRD versions or completely different CRDs
-- CRDs are completely isolated between vClusters and the host cluster
-- This enables flexible multi-tenancy for complex Kubernetes deployments
+Explore additional scenarios:
 
-## Why This Matters
+https://killercoda.com/vcluster
 
-Advanced CRD management is crucial for enterprise Kubernetes deployments because:
-- Different teams may need different CRD versions
-- Legacy applications may require older CRD versions
-- New applications may need custom CRDs not available in the host
-- This isolation prevents conflicts and ensures stability
-- It enables organizations to share infrastructure while maintaining tenant independence
+Join the community:
 
-## Next Steps
+https://slack.vcluster.com
 
-Now that you've completed the advanced scenarios, you can explore:
-- **vCluster 104**: Advanced networking and service isolation
-- **vCluster 105**: Integration with CI/CD pipelines
+Learn more at:
 
-## Resources
+https://vcluster.com/docs
 
-- [vCluster Documentation](https://www.vcluster.com/docs/)
-- [vCluster GitHub Repository](https://github.com/loft-sh/vcluster)
-- [Community Slack](https://slack.vcluster.com)
-
-Thank you for completing this advanced lab. You now have a deep understanding of how vCluster enables sophisticated multi-tenancy and CRD management in Kubernetes!
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=1adc4710-912a-4635-b8ea-886ca0377be9" />

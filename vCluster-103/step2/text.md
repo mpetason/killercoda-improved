@@ -1,30 +1,24 @@
-# Step 2 — Install CRDs in Host Cluster
+# Create a vCluster
 
-Now let's install a CRD in the host cluster to demonstrate the difference:
+A **vCluster (virtual cluster)** is a lightweight Kubernetes control plane that runs **inside** a Namespace but behaves as an independent Kubernetes cluster.
 
-`kubectl apply -f https://raw.githubusercontent.com/loft-sh/vcluster/main/examples/crd-example.yaml`{{exec}}
+A vCluster has its own:
+- API server
+- Controllers
+- CRDs
+
+This isolates tenants at the *control plane level*, not just at the Namespace level.
+
+Let's create a vCluster so that we can see what happens when we install different CRD versions on the host cluster and the vCluster.
+
+`vcluster create my-vcluster --namespace team-x`{{exec}}
+
+When connected, your kubeconfig points to the **vCluster API server**, not the host.
+
+The vCluster deploys without any CRDs by default as it is a fresh Kubernetes deployment.
 
 `kubectl get crds`{{exec}}
 
-We can see that the `crontabs.stable.example.com` CRD has been installed in the host cluster. This CRD is now available to all namespaces in the host cluster.
+Now disconnect so we can install CRDs on the host first:
 
-Let's check what CRDs are available in the vCluster:
-
-`kubectl get crds`{{exec}}
-
-Notice that the vCluster has no CRDs installed, which is the expected behavior since it starts with a clean slate.
-
-## Why This Matters
-
-This demonstrates the core isolation principle:
-- Host cluster CRDs are shared across all namespaces
-- vCluster CRDs are completely isolated from the host
-- The vCluster can install CRDs that don't exist in the host
-- This allows for different CRD versions or completely different CRDs per tenant
-- This isolation prevents conflicts and enables flexible tenancy models
-
-This capability is essential for complex Kubernetes environments where different teams need different CRD versions or custom resources.
-
-## Important Note
-
-We've now established the baseline CRD environment in the host cluster. We'll continue working in the vCluster for the next step, but remember that we'll need to disconnect from the vCluster before proceeding with host cluster operations in later steps.
+`vcluster disconnect`{{exec}}

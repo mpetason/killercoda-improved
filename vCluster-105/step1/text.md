@@ -1,21 +1,33 @@
-# Step 1 — Creating vCluster Snapshots
+# Create a vCluster with Workloads
 
-In this step, we'll create snapshots of our advanced vCluster to establish a backup strategy.
+First, let's create a vCluster and deploy several resources to simulate a real environment with workloads worth backing up.
 
-First, let's check our current vCluster setup:
-`vcluster list`{{exec}}
+## Create the vCluster
 
-Let's create a snapshot of our advanced vCluster:
-`vcluster snapshot create my-advanced-cluster "container:///tmp/my-snapshot.tar.gz" --include-volumes`{{exec}}
+`vcluster create backup-demo --namespace backup-ns`{{exec}}
 
-This command creates a snapshot of our vCluster including volumes. The `--include-volumes` flag ensures that persistent volume data is also backed up.
+## Deploy Workloads
 
-Let's check the status of our snapshot creation:
-`vcluster snapshot get my-advanced-cluster "container:///tmp/my-snapshot.tar.gz"`{{exec}}
+Create a deployment:
 
-The snapshot includes:
-- The vCluster's etcd datastore
-- Persistent volume data (when using --include-volumes)
-- All configuration and state information
+`kubectl create deployment nginx --image=nginx --replicas=2`{{exec}}
 
-Snapshots are essential for disaster recovery as they capture the complete state of a vCluster at a specific point in time.
+Create a service:
+
+`kubectl expose deployment nginx --port=80 --target-port=80 --type=ClusterIP`{{exec}}
+
+Create a configmap with application configuration:
+
+`kubectl create configmap app-config --from-literal=environment=production --from-literal=log_level=info`{{exec}}
+
+Create a secret:
+
+`kubectl create secret generic app-secret --from-literal=api-key=demo-key-12345`{{exec}}
+
+## Verify Everything Is Running
+
+`kubectl get deployments,services,configmaps,secrets`{{exec}}
+
+`kubectl get pods`{{exec}}
+
+We now have a vCluster with a deployment, service, configmap, and secret — a representative set of resources to back up.

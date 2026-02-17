@@ -1,21 +1,18 @@
-# Welcome to vCluster 106 — Advanced Security and RBAC Configurations
+# Welcome to vCluster 106 — Tenancy Models
 
-## What is vCluster?
+vCluster supports multiple tenancy models depending on your isolation needs. Each model balances cost, performance, and security differently.
 
-vCluster lets teams run virtual Kubernetes clusters on existing host clusters, giving each tenant an isolated control plane without creating separate physical clusters. It supports tenancy models from simple namespace isolation to fully dedicated nodes, GPUs, and bare metal. Environments are defined declaratively for easy, repeatable provisioning. By consolidating many virtual clusters onto fewer hosts, teams cut Kubernetes costs and simplify multi-tenant operations.
+In this scenario we will cover:
 
-## What You'll Learn
+- The three main tenancy models: Shared, Dedicated, and Private Nodes
+- How Autonodes provide auto-scaling node pools per tenant
+- When to use each model
+- Hands-on demonstration of the Shared Nodes model
 
-In this scenario, you'll learn how to implement advanced security configurations and RBAC management for vClusters. You'll explore:
+By the end, you will understand how to choose the right tenancy model for your use case.
 
-- Custom RBAC rule configurations
-- Pod security context configurations
-- Service account management
-- API server security hardening
-- Comprehensive security policy enforcement
+If you need help, join the community Slack:
 
-## What This Lab Covers
+https://slack.vcluster.com
 
-This scenario builds on the foundation established in previous scenarios and explores advanced security configurations and RBAC management for production-grade vCluster deployments. You'll learn how to implement fine-grained access controls, configure security policies, and manage authentication mechanisms that are essential for secure vCluster environments.
-
-After completing this scenario, you'll have the knowledge needed to secure your vCluster deployments against common security threats and compliance requirements.
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=a845cc0a-5bb1-4264-807e-20b6a5db69fa" />

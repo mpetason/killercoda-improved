@@ -17,13 +17,3 @@ Notice how they do not match the Host Cluster results. This is because the vClus
 We can also list the virtual clusters that have been created.
 
 `vcluster list`{{exec}}
-
-## Why this matters
-
-Inspecting a vCluster is crucial to understanding how it works:
-- The context name shows you're connected to a vCluster
-- CRDs and namespaces are isolated from the host cluster
-- Each vCluster maintains its own complete control plane
-- The `vcluster list` command gives you an overview of all managed vClusters
-
-This isolation is the core benefit of vCluster - each tenant gets their own control plane without sharing resources.

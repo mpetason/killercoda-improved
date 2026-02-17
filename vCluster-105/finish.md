@@ -1,25 +1,20 @@
-# Conclusion
+# Congratulations! You've completed the vCluster 105 Scenario.
 
-In this scenario, we've explored backup and disaster recovery strategies for vClusters, building on the advanced configuration concepts from vCluster 104. We've covered:
+You learned:
 
-1. vCluster backup and restore operations
-2. Snapshot management for vClusters
-3. Disaster recovery planning
-4. Backup strategies for production environments
+- How to export vCluster resources as YAML backups
+- How to back up the vCluster data store
+- How to restore a vCluster from a YAML backup
+- DR planning considerations for production environments
 
-These backup and recovery capabilities are essential for production vCluster deployments where data integrity and business continuity are critical.
+### Next Steps
 
-The learning path now provides a complete foundation for understanding and implementing vCluster in production Kubernetes environments, with scenarios covering:
-1. Basic vCluster operations (101)
-2. Multi-tenancy isolation (102)
-3. Advanced CRD management (103)
-4. Advanced configuration and performance optimization (104)
-5. Backup and disaster recovery (105)
+Learn more about vCluster:
 
-This progression takes users from quickstart to advanced concepts to common, useful use cases for vCluster.
+https://www.vcluster.com/docs/vcluster/
 
-## Get Started with vCluster
+Join the community:
 
-Ready to try vCluster for yourself? Visit [vCluster Free Tier](https://www.vcluster.com/pricing) to get started with the free tier.
+https://slack.vcluster.com
 
-Want to try the next generation of vCluster? Check out [vind](https://github.com/loft-sh/vind) - the next generation of virtual Kubernetes clusters.
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=1adc4710-912a-4635-b8ea-886ca0377be9" />
