@@ -1,4 +1,4 @@
-# Understanding CRDs and Namespaces
+# Step 1 — Understanding CRDs and Namespaces
 
 Namespaces are the **default isolation mechanism** in Kubernetes. They allow logical grouping of resources, controlling access, and splitting environments or teams. However, Namespaces **share a single control plane**.
 

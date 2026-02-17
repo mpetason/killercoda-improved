@@ -1,4 +1,4 @@
-# Monitoring vCluster Resources
+# Step 5 — Monitoring vCluster Resources
 
 Understanding vCluster resource consumption is important for capacity planning and troubleshooting.
 

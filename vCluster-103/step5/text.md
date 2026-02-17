@@ -1,4 +1,4 @@
-# Install Kyverno on the Host Cluster
+# Step 5 — Install Kyverno on the Host Cluster
 
 The host cluster can run a policy controller such as Kyverno. Kyverno adds policy CRDs (`ClusterPolicy`, `Policy`, etc.) and is straightforward to install via manifest.
 

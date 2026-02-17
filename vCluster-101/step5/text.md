@@ -1,4 +1,4 @@
-# Inspect the Host Cluster
+# Step 5 — Inspect the Host Cluster
 
 It's time to disconnect from the vCluster and see what resources are created on the Host Cluster.
 

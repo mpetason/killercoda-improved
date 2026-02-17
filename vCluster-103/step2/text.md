@@ -1,4 +1,4 @@
-# Create a vCluster
+# Step 2 — Create a vCluster
 
 A **vCluster (virtual cluster)** is a lightweight Kubernetes control plane that runs **inside** a Namespace but behaves as an independent Kubernetes cluster.
 

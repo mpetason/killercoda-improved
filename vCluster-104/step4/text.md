@@ -1,4 +1,4 @@
-# Control Plane Options
+# Step 4 — Control Plane Options
 
 vCluster supports different control plane configurations to match your requirements.
 
