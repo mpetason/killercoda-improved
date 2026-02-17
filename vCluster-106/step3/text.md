@@ -1,37 +1,64 @@
 # Dedicated Nodes
 
-Dedicated Nodes ensure Pods from a vCluster run **only** on specific nodes assigned to that vCluster.
+Dedicated Nodes ensure pods from a vCluster run **only** on specific nodes assigned to that virtual cluster. This is accomplished by syncing only nodes with matching labels into the vCluster.
 
-This is accomplished with nodeSelectors, taints, and tolerations.
+![Dedicated Nodes](../assets/dedicated_nodes.png)
 
-![Dedicated Nodes](../assets/dedicated_nodes_killercoda.png)
+```
+┌──────────────────────────────────────────────┐
+│              Host Cluster                     │
+│                                               │
+│  ┌──────────────┐    ┌──────────────┐        │
+│  │  vCluster A  │    │  vCluster B  │        │
+│  │ (control     │    │ (control     │        │
+│  │  plane)      │    │  plane)      │        │
+│  └──────┬───────┘    └──────┬───────┘        │
+│         │                   │                 │
+│         ▼                   ▼                 │
+│  ┌─────────────┐    ┌─────────────────┐      │
+│  │ label:      │    │ label:          │      │
+│  │ team=a      │    │ team=b          │      │
+│  │ ┌─────────┐ │    │ ┌────┐ ┌────┐  │      │
+│  │ │  Node 1 │ │    │ │ N2 │ │ N3 │  │      │
+│  │ │  [A][A] │ │    │ │[B] │ │[B] │  │      │
+│  │ └─────────┘ │    │ └────┘ └────┘  │      │
+│  └─────────────┘    └─────────────────┘      │
+│    Pods scheduled only to labeled nodes       │
+└──────────────────────────────────────────────┘
+```
 
-### Example vcluster.yaml:
+## Configuration
+
+To dedicate nodes to a vCluster, label your host nodes (e.g., `team=team-a`) and configure the vCluster to sync only those nodes using `sync.fromHost.nodes.selector.labels`:
 
 ```yaml
 sync:
-  nodes:
-    enabled: true
-
-scheduler:
-  nodeSelector:
-    dedicated: team-x
+  fromHost:
+    nodes:
+      enabled: true
+      selector:
+        labels:
+          team: team-a
 ```
 
-To use this configuration, you would label your nodes with `dedicated: team-x` and create the vCluster with:
+This tells vCluster to only sync host nodes that have the label `team=team-a`. Since the vCluster's scheduler only sees these nodes, all workloads are placed exclusively on the dedicated node pool.
+
+To use this configuration, you would create the vCluster with:
 
 ```
-vcluster create my-vcluster --namespace team-x --values vcluster.yaml
+vcluster create my-vcluster --namespace team-a --values vcluster.yaml
 ```
 
-### Benefits:
+You can also combine label selectors with taints and tolerations on the host nodes to prevent other workloads from being scheduled onto dedicated nodes.
 
-- Strong workload separation
-- Great for putting teams on nodes with GPUs
+## Benefits
+
+- Strong workload separation at the node level
 - Predictable performance — no noisy neighbor issues
 - Teams get dedicated compute resources
+- Great for nodes with specialized hardware (GPUs, high-memory)
 
-### When to Use:
+## When to Use
 
 - Teams need guaranteed resources (GPU, high-memory)
 - Compliance requires workload separation at the node level

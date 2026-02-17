@@ -1,37 +1,54 @@
 # Shared Nodes
 
-With Shared Nodes, all workloads from multiple virtual clusters run on the same underlying worker nodes. This is the default tenancy model.
+With Shared Nodes, all workloads from multiple virtual clusters run on the same underlying worker nodes. This is the **default** tenancy model — no special configuration is needed.
 
-![Shared Nodes](../assets/shared_nodes_killercoda.png)
+![Shared Nodes](../assets/shared_nodes.png)
 
-## Benefits:
+```
+┌─────────────────────────────────────────────┐
+│              Host Cluster                    │
+│                                              │
+│  ┌──────────────┐   ┌──────────────┐        │
+│  │  vCluster A  │   │  vCluster B  │        │
+│  │ (control     │   │ (control     │        │
+│  │  plane)      │   │  plane)      │        │
+│  └──────┬───────┘   └──────┬───────┘        │
+│         │                  │                 │
+│         ▼                  ▼                 │
+│  ┌─────────┐ ┌─────────┐ ┌─────────┐       │
+│  │  Node 1 │ │  Node 2 │ │  Node 3 │       │
+│  │ [A][B]  │ │ [A][B]  │ │ [A][B]  │       │
+│  └─────────┘ └─────────┘ └─────────┘       │
+│    Pods from A and B mixed across all nodes  │
+└─────────────────────────────────────────────┘
+```
 
-- Very cost-efficient
-- Minimal complexity
-- Perfect for dev, test, preview, and production
+## Benefits
 
-## Hands-On: Create a Shared Nodes vCluster
+- Very cost-efficient — maximizes node utilization
+- Minimal complexity — works out of the box
+- Perfect for dev, test, preview, and production environments
 
-Let's create a vCluster using the default Shared Nodes model and deploy a workload:
+## Configuration
 
-`vcluster create shared-demo --namespace shared-ns`{{exec}}
+Shared Nodes is the default, so a basic `vcluster create` uses this model with no extra configuration.
 
-Deploy a simple application:
+If you want the vCluster to see **all** host nodes (not just nodes that have scheduled pods), you can enable full node syncing:
 
-`kubectl create deployment nginx --image=nginx`{{exec}}
+```yaml
+sync:
+  fromHost:
+    nodes:
+      enabled: true
+      selector:
+        all: true
+```
 
-`kubectl get pods`{{exec}}
+This syncs all host nodes into the virtual cluster, giving workloads inside the vCluster visibility into the full node topology. Without this setting, vCluster only syncs nodes that are actively running pods for that virtual cluster.
 
-Now disconnect and check where the pod is running on the host:
+## When to Use
 
-`vcluster disconnect`{{exec}}
-
-`kubectl get pods -n shared-ns`{{exec}}
-
-`kubectl get nodes`{{exec}}
-
-Notice how the pod runs on the same node as all other workloads. This is the Shared Nodes model — simple and cost-efficient.
-
-Clean up:
-
-`vcluster delete shared-demo`{{exec}}
+- Development and testing environments
+- Preview environments for pull requests
+- Cost-sensitive workloads where isolation at the node level is not required
+- Any scenario where the default scheduling behavior is acceptable
