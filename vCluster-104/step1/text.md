@@ -8,18 +8,20 @@ If no `vcluster.yaml` is provided, vCluster applies defaults: embedded SQLite da
 
 Let's create a `vcluster.yaml` that customizes our vCluster. Copy the configuration below:
 
-`sync:
+```yaml
+sync:
   toHost:
     ingresses:
       enabled: true
   fromHost:
     nodes:
-      enabled: true`{{copy}}
+      enabled: true
+```
 
 - **`sync.toHost.ingresses.enabled`** — Syncs ingress resources from the vCluster to the host cluster so they can be served by the host's ingress controller.
 - **`sync.fromHost.nodes.enabled`** — Syncs real node information into the vCluster instead of creating fake nodes.
 
-Open the **Editor** tab and save this as `vcluster.yaml`.
+Save this as `vcluster.yaml` in the **Editor** tab.
 
 ## Create a vCluster with Custom Config
 

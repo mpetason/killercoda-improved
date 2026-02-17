@@ -10,7 +10,8 @@ First, disconnect from the vCluster:
 
 Create an updated configuration with resource limits. Copy the YAML below:
 
-`sync:
+```yaml
+sync:
   toHost:
     ingresses:
       enabled: true
@@ -25,11 +26,12 @@ controlPlane:
         memory: "512Mi"
       requests:
         cpu: "200m"
-        memory: "256Mi"`{{copy}}
+        memory: "256Mi"
+```
 
 The `controlPlane.statefulSet.resources` section sets CPU and memory limits on the vCluster control plane pod, just like you would for any Kubernetes workload.
 
-Open the **Editor** tab and save this as `vcluster.yaml` (overwriting the previous configuration).
+Save this as `vcluster.yaml` in the **Editor** tab (overwriting the previous configuration).
 
 ## Apply the Updated Configuration
 
