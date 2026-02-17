@@ -10,5 +10,3 @@ What you'll do:
 - Deploy the same `my-app` Deployment and Service in each vCluster
 - Expose each service (Port-Forwarding)
 - Verify both services work without interfering with each other
-
-<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=a845cc0a-5bb1-4264-807e-20b6a5db69fa" />

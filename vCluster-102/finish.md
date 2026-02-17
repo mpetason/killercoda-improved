@@ -10,4 +10,9 @@ Join us on Slack if you have questions:
 
 https://slack.vcluster.com
 
-<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=1adc4710-912a-4635-b8ea-886ca0377be9" />
+### Try vCluster on Your Own
+
+Ready to use vCluster outside of this sandbox?
+
+- **Run vCluster locally** with [vind](https://github.com/loft-sh/vind) — spin up virtual clusters on your own machine
+- **Sign up for free** at [vcluster.com/pricing](https://vcluster.com/pricing) — get started with the free tier on any Kubernetes cluster

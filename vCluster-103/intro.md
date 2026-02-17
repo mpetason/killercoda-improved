@@ -15,5 +15,3 @@ By the end, you will understand how vCluster enables CRD isolation for multi-ten
 If you need help, join the community Slack:
 
 https://slack.vcluster.com
-
-<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=a845cc0a-5bb1-4264-807e-20b6a5db69fa" />
