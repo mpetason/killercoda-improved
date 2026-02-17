@@ -21,17 +21,17 @@ sync:
 - **`sync.toHost.ingresses.enabled`** — Syncs ingress resources from the vCluster to the host cluster so they can be served by the host's ingress controller.
 - **`sync.fromHost.nodes.enabled`** — Syncs real node information into the vCluster instead of creating fake nodes.
 
-Click below to create this file:
+Copy the YAML to your clipboard by clicking below:
 
-`cat <<'EOF' > /root/vcluster.yaml
-sync:
+`sync:
   toHost:
     ingresses:
       enabled: true
   fromHost:
     nodes:
-      enabled: true
-EOF`{{exec}}
+      enabled: true`{{copy}}
+
+Open the **Editor** tab, create a new file at `/root/vcluster.yaml`, and paste the content.
 
 ## Create a vCluster with Custom Config
 

@@ -31,10 +31,9 @@ controlPlane:
 
 The `controlPlane.statefulSet.resources` section sets CPU and memory limits on the vCluster control plane pod, just like you would for any Kubernetes workload.
 
-Click below to create this file:
+Copy the YAML to your clipboard by clicking below:
 
-`cat <<'EOF' > /root/vcluster-resources.yaml
-sync:
+`sync:
   toHost:
     ingresses:
       enabled: true
@@ -49,8 +48,9 @@ controlPlane:
         memory: "512Mi"
       requests:
         cpu: "200m"
-        memory: "256Mi"
-EOF`{{exec}}
+        memory: "256Mi"`{{copy}}
+
+Open the **Editor** tab, create a new file at `/root/vcluster-resources.yaml`, and paste the content.
 
 ## Apply the Updated Configuration
 
