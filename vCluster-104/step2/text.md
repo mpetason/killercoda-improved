@@ -1,22 +1,44 @@
-# Step 2 — Resource Allocation and Performance Tuning
+# Resource Limits and Requests
 
-In this step, we'll dive deeper into resource allocation and performance tuning for vClusters.
+In production environments, you should set resource limits on the vCluster control plane to prevent it from consuming too many host cluster resources.
 
-Let's check the current resource usage of our vCluster:
-`kubectl top pods -n team-x`{{exec}}
+## Disconnect and Update Configuration
 
-We can also examine the resource requests and limits more closely:
-`kubectl get pods -n team-x -o yaml | grep -A 10 "resources"`{{exec}}
+First, disconnect from the vCluster:
 
-Now let's update our vCluster with more specific resource settings for better performance:
-`vcluster create my-advanced-cluster --namespace team-x --connect=false --upgrade --cpu-request 750m --memory-request 2Gi --cpu-limit 1500m --memory-limit 4Gi`{{exec}}
+`vcluster disconnect`{{exec}}
 
-These settings provide:
-- Higher CPU request for better performance
-- Increased memory request and limit
-- More generous resource allocation for production workloads
+Create an updated configuration with resource limits:
 
-Let's verify our updated resource settings:
-`kubectl get deployment vcluster-my-advanced-cluster -n team-x -o yaml | grep -A 20 "resources"`{{exec}}
+`cat <<'EOF' > /root/vcluster-resources.yaml
+sync:
+  toHost:
+    ingresses:
+      enabled: true
+  fromHost:
+    nodes:
+      enabled: true
+controlPlane:
+  statefulSet:
+    resources:
+      limits:
+        cpu: "1"
+        memory: "512Mi"
+      requests:
+        cpu: "200m"
+        memory: "256Mi"
+EOF`{{exec}}
 
-Proper resource allocation is crucial for ensuring that vClusters don't consume excessive resources from the host cluster while still providing good performance to tenants.
+## Apply the Updated Configuration
+
+Use the `--upgrade` flag to update the existing vCluster:
+
+`vcluster create config-demo --namespace config-ns --upgrade --values /root/vcluster-resources.yaml`{{exec}}
+
+## Verify Resource Limits
+
+Check the statefulset to confirm resource limits are applied:
+
+`kubectl get statefulset -n config-ns -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}{.spec.template.spec.containers[0].resources}{"\n"}{end}'`{{exec}}
+
+You should see the CPU and memory limits we configured. Setting resource limits is a best practice for production vClusters to ensure fair resource sharing on the host cluster.

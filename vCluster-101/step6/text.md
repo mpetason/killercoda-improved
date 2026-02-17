@@ -9,13 +9,3 @@ Then we can use `vcluster list` to see the status, or we can use kubectl to list
 `vcluster list`{{exec}}
 
 `kubectl get all -n team-x`{{exec}}
-
-## Why this matters
-
-Cleaning up vClusters is important for:
-- Resource management
-- Cost control
-- Maintaining a clean environment
-- Understanding the lifecycle of vClusters
-
-The ability to quickly create and delete vClusters is one of vCluster's key advantages, enabling ephemeral environments and efficient resource utilization.

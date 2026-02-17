@@ -1,19 +1,43 @@
-# Step 3 — Monitoring and Observability Setup
+# Sync Configuration
 
-Setting up proper monitoring and observability is essential for production vCluster deployments. In this step, we'll explore how to monitor vCluster performance.
+vCluster syncs resources between the virtual cluster and the host cluster. Understanding and configuring sync behavior is key to a well-functioning vCluster.
 
-Let's first check what monitoring components are available in the vCluster:
-`kubectl get pods -n team-x | grep -i monitor`{{exec}}
+## Default Sync Behavior
 
-vCluster integrates well with standard Kubernetes monitoring tools. We can set up Prometheus metrics collection:
-`kubectl apply -f https://raw.githubusercontent.com/loft-sh/vcluster/main/docs/monitoring/prometheus.yaml`{{exec}}
+By default, vCluster syncs these resources from the virtual cluster **to the host**:
+- Pods
+- Services
+- ConfigMaps (referenced by pods)
+- Secrets (referenced by pods)
+- Endpoints
+- PersistentVolumeClaims
 
-This command deploys a Prometheus configuration that can scrape metrics from vClusters.
+And from the host **to the virtual cluster**:
+- Events
+- Storage classes (if enabled)
 
-Let's also look at the vCluster logs to understand what's happening:
-`kubectl logs deployment/vcluster-my-advanced-cluster -n team-x`{{exec}}
+## Connect and Explore Current Sync
 
-For more detailed logging, we can increase the verbosity:
-`vcluster create my-advanced-cluster --namespace team-x --connect=false --upgrade --log-level debug`{{exec}}
+`vcluster connect config-demo --namespace config-ns`{{exec}}
 
-Monitoring helps ensure that vClusters are performing well and allows you to identify potential issues before they become critical.
+Create some resources to see sync in action:
+
+`kubectl create deployment sync-test --image=nginx`{{exec}}
+
+`kubectl expose deployment sync-test --port=80 --type=ClusterIP`{{exec}}
+
+`kubectl create configmap test-config --from-literal=key=value`{{exec}}
+
+Check resources in the vCluster:
+
+`kubectl get deployments,services,configmaps`{{exec}}
+
+Now disconnect and see what was synced to the host:
+
+`vcluster disconnect`{{exec}}
+
+`kubectl get pods -n config-ns`{{exec}}
+
+`kubectl get services -n config-ns`{{exec}}
+
+Notice that **pods** and **services** are synced to the host namespace, but the **deployment** object stays in the vCluster. This is by design — vCluster syncs the workload resources (pods) but the higher-level abstractions (deployments, replicasets) remain virtual.

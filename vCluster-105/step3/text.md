@@ -1,19 +1,33 @@
-# Step 3 — Restoring vClusters from Backups
+# Back Up the vCluster Data Store
 
-In this step, we'll demonstrate how to restore a vCluster from a backup, which is a critical part of disaster recovery.
+For a more complete backup, we can back up the vCluster's underlying data store. The default k3s-based vCluster uses an embedded SQLite database stored within the vCluster pod.
 
-First, let's see what's currently in our namespace:
-`kubectl get all -n team-x`{{exec}}
+## Disconnect from the vCluster
 
-Now, let's simulate a scenario where we need to restore our vCluster. First, we'll disconnect from the current vCluster:
 `vcluster disconnect`{{exec}}
 
-Let's try to restore our vCluster from the snapshot we created earlier:
-`vcluster restore my-advanced-cluster "container:///tmp/my-snapshot.tar.gz" --restore-volumes`{{exec}}
+## Identify the vCluster Pod
 
-This command restores the vCluster from our local snapshot and includes volume restoration. The `--restore-volumes` flag ensures that persistent data is also restored.
+`kubectl get pods -n backup-ns -l app=vcluster`{{exec}}
 
-After restoration, let's verify our vCluster is running:
-`vcluster list`{{exec}}
+## Back Up the Data Store
 
-Restoring from backups is crucial for disaster recovery and ensures business continuity in case of unexpected failures or data corruption.
+The vCluster's data is stored in a PersistentVolume. Let's identify it:
+
+`kubectl get pvc -n backup-ns`{{exec}}
+
+We can copy the data from the vCluster pod. The k3s data store is located at `/data/server/db/` inside the pod:
+
+`kubectl cp backup-ns/$(kubectl get pod -n backup-ns -l app=vcluster -o jsonpath='{.items[0].metadata.name}'):/data /root/vcluster-data-backup`{{exec}}
+
+## Create a Compressed Archive
+
+`tar czf /root/vcluster-backup.tar.gz -C /root vcluster-data-backup`{{exec}}
+
+## Verify the Backup
+
+`ls -la /root/vcluster-backup.tar.gz`{{exec}}
+
+`tar tzf /root/vcluster-backup.tar.gz | head -10`{{exec}}
+
+This data store backup captures the complete state of the vCluster's control plane, including all resource definitions, RBAC, and cluster configuration.

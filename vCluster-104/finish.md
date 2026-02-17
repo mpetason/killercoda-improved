@@ -1,18 +1,21 @@
-# Conclusion
+# Congratulations! You've completed the vCluster 104 Scenario.
 
-In this scenario, we've explored advanced configuration and performance optimization techniques for vClusters. We've covered:
+You learned:
 
-1. Advanced vCluster configuration options and flags
-2. Resource allocation and performance tuning
-3. Monitoring and observability setup
-4. Network optimization techniques
+- How to use `vcluster.yaml` to customize vCluster deployments
+- How to set resource limits on the control plane
+- How to configure sync behavior for different resource types
+- Control plane distro and backing store options
+- How to monitor vCluster resource consumption
 
-These advanced concepts are crucial for deploying vClusters in production environments where reliability, performance, and observability are important.
+### Next Steps
 
-In the next scenario (vCluster 105), we'll explore backup and disaster recovery strategies for vClusters.
+Explore the full vcluster.yaml reference:
 
-## Get Started with vCluster
+https://www.vcluster.com/docs/vcluster/configure/vcluster-yaml/
 
-Ready to try vCluster for yourself? Visit [vCluster Free Tier](https://www.vcluster.com/pricing) to get started with the free tier.
+Join the community:
 
-Want to try the next generation of vCluster? Check out [vind](https://github.com/loft-sh/vind) - the next generation of virtual Kubernetes clusters.
+https://slack.vcluster.com
+
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=1adc4710-912a-4635-b8ea-886ca0377be9" />

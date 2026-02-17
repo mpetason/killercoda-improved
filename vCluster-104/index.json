@@ -1,22 +1,46 @@
 {
-  "title": "v104 - vCluster Resource Management",
-  "description": "Learn how to manage resources in vCluster environments.",
-  "difficulty": "intermediate",
-  "time": "30",
-  "category": "Kubernetes",
-  "tags": ["vcluster", "resources", "kubernetes", "cpu", "memory", "cli"],
+  "title": "v104 - Advanced Configuration",
+  "description": "Advanced vCluster configuration with vcluster.yaml, resource limits, sync settings, and monitoring.",
   "details": {
     "intro": {
       "text": "intro.md",
       "background": "setup.sh"
     },
     "steps": [
-      { "title": "Setup Environment", "text": "step1/text.md", "verify": "step1/verify.sh" },
-      { "title": "Create Resource Quotas", "text": "step2/text.md", "verify": "step2/verify.sh" },
-      { "title": "Configure Limit Ranges", "text": "step3/text.md", "verify": "step3/verify.sh" },
-      { "title": "Monitor Resource Usage", "text": "step4/text.md", "verify": "step4/verify.sh" }
+      {
+        "title": "Configuration with vcluster.yaml",
+        "text": "step1/text.md",
+        "verify": "step1/verify.sh"
+      },
+      {
+        "title": "Resource Limits and Requests",
+        "text": "step2/text.md",
+        "verify": "step2/verify.sh"
+      },
+      {
+        "title": "Sync Configuration",
+        "text": "step3/text.md",
+        "verify": "step3/verify.sh"
+      },
+      {
+        "title": "Control Plane Options",
+        "text": "step4/text.md",
+        "verify": "step4/verify.sh"
+      },
+      {
+        "title": "Monitoring vCluster Resources",
+        "text": "step5/text.md",
+        "verify": "step5/verify.sh"
+      },
+      {
+        "title": "Cleanup",
+        "text": "step6/text.md",
+        "verify": "step6/verify.sh"
+      }
     ],
-    "finish": { "text": "finish.md" }
+    "finish": {
+      "text": "finish.md"
+    }
   },
   "backend": {
     "imageid": "kubernetes-kubeadm-1node-4GB"

@@ -1,28 +1,27 @@
-# Step 4 — Compare CRD Versions
+# Install a Different Cert-Manager Version in the vCluster
 
-Let's examine the differences between CRDs in the host and vCluster:
+Inside the vCluster, we can install a **completely different version** of Cert-Manager without impacting the host cluster. This demonstrates how teams can test upgrades or run legacy versions independently.
 
-`kubectl get crd crontabs.stable.example.com -o yaml`{{exec}}
+### Connect and Install Cert-Manager v1.13 in the vCluster:
 
-`kubectl get crd myapp.example.com -o yaml`{{exec}}
+`vcluster connect my-vcluster --namespace team-x`{{exec}}
 
-Now let's disconnect from the vCluster to return to the host cluster context:
+`kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.13.0/cert-manager.crds.yaml`{{exec}}
+
+List the CRDs:
+
+`kubectl get crds`{{exec}}
+
+Now compare the vCluster vs Host:
+
+## vCluster version (v1.13.0):
+
+`kubectl get crd certificates.cert-manager.io -o yaml | grep "app.kubernetes.io/version:"`{{exec}}
+
+## Host version (v1.14.0):
 
 `vcluster disconnect`{{exec}}
 
-`kubectl get crd crontabs.stable.example.com -o yaml`{{exec}}
+`kubectl get crd certificates.cert-manager.io -o yaml | grep "app.kubernetes.io/version:"`{{exec}}
 
-## Why This Matters
-
-This comparison shows the isolation capabilities:
-- The host cluster has the `crontabs.stable.example.com` CRD
-- The vCluster has both the host CRD and its own `myapp.example.com` CRD
-- CRDs are completely isolated between environments
-- This allows for different CRD versions or completely different CRDs per tenant
-- The host cluster remains unchanged when vClusters install CRDs
-
-This demonstrates how vCluster enables true control plane isolation at the CRD level, which is essential for managing complex multi-tenant Kubernetes deployments.
-
-## Important Note
-
-We've disconnected from the vCluster to ensure we're working in the host cluster context for the next steps. This is important because the following steps will install CRDs directly on the host cluster, and we want to make sure we're not inadvertently installing them in the vCluster.
+The two versions are different and that's the point. vCluster allows **CRD version isolation**, making testing and migration safer.

@@ -1,20 +1,23 @@
-# Step 5 — Cleanup & Wrap-up
+# Install Kyverno on the Host Cluster
 
-In this final step, we'll clean up the resources we created:
+The host cluster can run a policy controller such as Kyverno. Kyverno adds policy CRDs (`ClusterPolicy`, `Policy`, etc.) and is straightforward to install via manifest.
 
-`vcluster delete my-vcluster`{{exec}}
+## Verify Context
 
-`kubectl delete namespace team-x`{{exec}}
+Let's make sure we are on the host cluster before deploying Kyverno.
 
-`vcluster list`{{exec}}
+`kubectx`{{exec}}
 
-## Why This Matters
+If at any time you need to swap to the Host Cluster from the vCluster you can run:
 
-Proper cleanup is essential for vCluster management:
-- vClusters consume host cluster resources
-- Cleaning up prevents resource leakage
-- It maintains a clean environment for future experiments
-- The vCluster delete command removes all associated resources
-- Namespace cleanup ensures proper isolation
+`vcluster disconnect`{{exec}}
 
-This demonstrates the complete lifecycle of vCluster CRD management - from creation to cleanup while maintaining proper isolation between environments.
+## Install Kyverno on the host:
+
+`kubectl create -f https://github.com/kyverno/kyverno/releases/download/v1.11.1/install.yaml`{{exec}}
+
+List Kyverno CRDs:
+
+`kubectl get crds | grep -i kyverno`{{exec}}
+
+The host now contains Kyverno CRDs.

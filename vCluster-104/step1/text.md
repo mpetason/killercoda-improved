@@ -1,20 +1,35 @@
-# Step 1 — Configure Advanced vCluster Settings
+# Configuration with vcluster.yaml
 
-In this step, we'll configure advanced settings for our existing vCluster to optimize its behavior for production workloads.
+The `vcluster.yaml` file is the central configuration source for a vCluster. It controls everything from the control plane architecture to resource sync behavior.
 
-First, let's check our current vCluster configuration:
+If no `vcluster.yaml` is provided, vCluster applies defaults: embedded SQLite database, basic resource syncing (pods, services), and ClusterIP networking.
+
+## Create a Custom Configuration
+
+Let's create a `vcluster.yaml` that customizes our vCluster:
+
+`cat <<'EOF' > /root/vcluster.yaml
+sync:
+  toHost:
+    ingresses:
+      enabled: true
+  fromHost:
+    nodes:
+      enabled: true
+EOF`{{exec}}
+
+This configuration enables syncing ingresses from the vCluster to the host and syncing real node information into the vCluster.
+
+## Create a vCluster with Custom Config
+
+`vcluster create config-demo --namespace config-ns --values /root/vcluster.yaml`{{exec}}
+
+Verify the vCluster is running:
+
 `vcluster list`{{exec}}
 
-We'll use the `--upgrade` flag to update our existing vCluster with advanced configuration options:
-`vcluster create my-advanced-cluster --namespace team-x --connect=false --upgrade --cpu-request 500m --memory-request 1Gi --cpu-limit 1000m --memory-limit 2Gi`{{exec}}
+You can see the nodes synced from the host cluster:
 
-This command updates our existing vCluster with:
-- CPU request of 500 millicores
-- Memory request of 1Gi
-- CPU limit of 1000 millicores
-- Memory limit of 2Gi
+`kubectl get nodes`{{exec}}
 
-Let's verify the updated configuration:
-`kubectl describe deployment vcluster-my-advanced-cluster -n team-x`{{exec}}
-
-The `--upgrade` flag is crucial for updating existing vClusters without having to recreate them, which is essential for production environments where you want to maintain uptime while making configuration changes.
+With the default configuration, vCluster creates fake nodes. With `sync.fromHost.nodes.enabled: true`, real host node information is visible inside the vCluster.

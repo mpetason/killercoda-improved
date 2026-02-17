@@ -1,44 +1,21 @@
-# Step 4 — Disaster Recovery Planning
+# Simulate Disaster — Delete vCluster
 
-In this final step, we'll explore comprehensive disaster recovery planning for vClusters.
+Now let's simulate a disaster by completely deleting the vCluster. This removes all virtual cluster resources from the host.
 
-Let's create a disaster recovery plan document:
-`mkdir -p /tmp/dr-plan`{{exec}}
+## Delete the vCluster
 
-`echo "vCluster Disaster Recovery Plan
-=================
+`vcluster delete backup-demo`{{exec}}
 
-1. Identify the affected vCluster
-2. Check backup availability
-3. Determine recovery point objective (RPO)
-4. Perform restoration
-5. Validate restored environment
-6. Monitor post-restoration performance
+## Verify Destruction
 
-Key Contacts:
-- Platform Administrator: admin@company.com
-- vCluster Owner: owner@team-x.com
+`vcluster list`{{exec}}
 
-Backup Schedule:
-- Daily snapshots: 23:00 UTC
-- Weekly full backups: Sunday 02:00 UTC
-- Monthly archival backups: First day of month 03:00 UTC
+`kubectl get all -n backup-ns`{{exec}}
 
-Recovery Time Objective (RTO): 2 hours" > /tmp/dr-plan/recovery-plan.md`{{exec}}
+The vCluster and all its resources are gone. In a real disaster, this could happen due to accidental deletion, namespace cleanup, or infrastructure failure.
 
-Let's also set up a simple backup monitoring script:
-`echo '#!/bin/bash
-echo "Checking vCluster backup status..."
-vcluster snapshot list my-advanced-cluster
-echo "Backup check completed at $(date)"' > /tmp/dr-plan/backup-monitor.sh`{{exec}}
+## Verify Our Backups Still Exist
 
-`chmod +x /tmp/dr-plan/backup-monitor.sh`{{exec}}
+`ls -la /root/backup-all.yaml /root/vcluster-backup.tar.gz`{{exec}}
 
-A comprehensive disaster recovery plan includes:
-- Regular backup schedules
-- Clear restoration procedures
-- Testing of restoration processes
-- Documentation of all steps
-- Regular review and updates of the plan
-
-This ensures that your vCluster environments can be quickly and reliably recovered in case of emergencies.
+Our backup files are safe on the local filesystem. In production, these would be stored in object storage (S3, GCS), a backup service, or a version control system.

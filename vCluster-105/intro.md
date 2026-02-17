@@ -1,19 +1,20 @@
 # Welcome to vCluster 105 — Backup and Disaster Recovery
 
-## What is vCluster?
+Having a backup and recovery strategy is essential for any production environment. vClusters can be backed up at multiple levels depending on your recovery needs.
 
-vCluster lets teams run virtual Kubernetes clusters on existing host clusters, giving each tenant an isolated control plane without creating separate physical clusters. It supports tenancy models from simple namespace isolation to fully dedicated nodes, GPUs, and bare metal. Environments are defined declaratively for easy, repeatable provisioning. By consolidating many virtual clusters onto fewer hosts, teams cut Kubernetes costs and simplify multi-tenant operations.
+In this scenario we will cover:
 
-## What You'll Learn
+- Creating a vCluster with workloads worth backing up
+- Exporting Kubernetes resources as YAML for backup
+- Backing up the vCluster's data store
+- Simulating a disaster by deleting the vCluster
+- Restoring from backup
+- Planning a DR strategy
 
-In this scenario, we'll explore backup and disaster recovery strategies for vClusters, building on the advanced configuration concepts from vCluster 104.
+By the end, you will understand how to protect your vCluster workloads and recover from failures.
 
-We'll build on the advanced vCluster configuration we've been working with to:
-- Create snapshots of vClusters
-- Restore vClusters from backups
-- Implement disaster recovery procedures
-- Manage backup strategies for production environments
+If you need help, join the community Slack:
 
-## What This Lab Covers
+https://slack.vcluster.com
 
-This scenario focuses on ensuring your vCluster environments can be protected and recovered in case of failures.
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=a845cc0a-5bb1-4264-807e-20b6a5db69fa" />

@@ -1,24 +1,20 @@
-# Step 1 — Understanding vCluster vs Host CRD Isolation
+# Understanding CRDs and Namespaces
 
-Before we begin installing CRDs, let's understand how vCluster provides isolation for CRDs.
+Namespaces are the **default isolation mechanism** in Kubernetes. They allow logical grouping of resources, controlling access, and splitting environments or teams. However, Namespaces **share a single control plane**.
 
-CRDs in Kubernetes are cluster-scoped, meaning they're shared across all namespaces in a cluster. However, vCluster creates a new API server that can be configured with different CRD versions or even completely different CRDs.
+## Problems with Namespaces:
 
-Let's first look at what CRDs exist in the host cluster:
+- They do **not isolate the API server**
+- **CRDs are global** — all tenants share the same version
+- Cluster-wide controllers can affect all Namespaces
+- Tenants can break each other through RBAC misconfigurations or resource quota conflicts
+
+Namespaces are helpful, but they **may not provide full multi-tenant isolation**.
+
+Let's take a look at the CRDs on the host cluster. These CRDs are shared by all Namespaces:
 
 `kubectl get crds`{{exec}}
 
-Now let's create a vCluster to see how it starts with no CRDs by default:
+`kubectl get namespaces`{{exec}}
 
-`vcluster create my-vcluster --namespace team-x`{{exec}}
-
-## Why This Matters
-
-This demonstrates a key concept of vCluster:
-- The host cluster has a set of CRDs installed
-- Each vCluster starts with a clean slate (no CRDs by default)
-- vCluster can install its own CRDs without affecting the host cluster
-- This isolation prevents CRD conflicts between tenants
-- Each vCluster can have its own CRD version or completely different CRDs
-
-This is a fundamental benefit of vCluster - true control plane isolation.
+Notice how CRDs exist at the cluster level, not within a Namespace. This is the fundamental limitation we will solve with vCluster.

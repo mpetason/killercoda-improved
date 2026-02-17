@@ -1,28 +1,19 @@
-# vCluster 103 - Advanced CRD Management
+# Welcome to vCluster 103 — Advanced CRD Management
 
-## What You'll Learn
+Kubernetes offers Namespaces as the default isolation method, but Namespaces alone fall short for true multitenancy. CRDs are cluster-scoped, meaning all Namespaces share the same CRD definitions. vCluster provides a lightweight virtualized control plane that isolates tenants at the API level.
 
-In this scenario, you'll explore how vCluster enables advanced CRD management and tenancy models. You'll learn how to handle different CRD versions in host and vCluster environments, and understand the isolation patterns that make vCluster powerful for multi-tenant Kubernetes deployments.
+In this scenario we will cover:
 
-## Why This Matters
+- Why Namespaces are limited for CRD isolation
+- How vCluster solves Namespace problems
+- How CRDs behave globally vs virtually
+- Running different CRD versions in host vs vCluster
+- Installing alternative policy engines inside a vCluster
 
-CRD (Custom Resource Definition) management is a critical aspect of Kubernetes multi-tenancy. vCluster allows you to:
-- Install different versions of CRDs in host vs vClusters
-- Run conflicting CRDs in different vClusters
-- Manage complex tenancy scenarios with isolation at the control plane level
+By the end, you will understand how vCluster enables CRD isolation for multi-tenant Kubernetes architectures.
 
-![CRD Isolation](./assets/crd-isolation.png)
+If you need help, join the community Slack:
 
-## What This Lab Covers
+https://slack.vcluster.com
 
-- Understanding CRD differences between host and vClusters
-- Installing CRDs in host cluster
-- Installing different CRD versions in vClusters
-- Comparing CRD versions in different environments
-- Exploring tenancy models and isolation patterns
-
-This scenario demonstrates how vCluster provides complete control plane isolation, which is essential for managing complex Kubernetes environments.
-
-## Important Note
-
-Throughout this scenario, you'll work in both vCluster and host cluster contexts. It's important to understand when you're working in each environment and when to disconnect from the vCluster to ensure you're performing operations in the correct context.
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=a845cc0a-5bb1-4264-807e-20b6a5db69fa" />

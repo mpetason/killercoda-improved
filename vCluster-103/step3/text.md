@@ -1,32 +1,27 @@
-# Step 3 — Install Different CRD in vCluster
+# Install Cert-Manager CRD on Host
 
-In this step, we'll install a different CRD in the vCluster to show how vCluster can have completely different CRDs than the host cluster.
+In this step, we simulate a real-world scenario where the platform team installs Cert-Manager at the cluster level.
 
-`kubectl apply -f https://raw.githubusercontent.com/loft-sh/vcluster/main/examples/crd-example2.yaml`{{exec}}
+## Verify the context to make sure we are on the host cluster:
 
-`kubectl get crds`{{exec}}
+`kubectx`{{exec}}
 
-Now we can see that the vCluster has both CRDs installed:
-- `crontabs.stable.example.com` (from host)
-- `myapp.example.com` (from vCluster)
+The output should show kubernetes-admin@kubernetes in green.
 
-Let's create a custom resource using the new CRD:
+## Install Cert-Manager v1.14 on the host:
 
-`kubectl create -f https://raw.githubusercontent.com/loft-sh/vcluster/main/examples/crd-example2.yaml`{{exec}}
+`kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.14.0/cert-manager.crds.yaml`{{exec}}
 
-`kubectl get myapp`{{exec}}
+Inspect the CRD:
 
-## Why This Matters
+`kubectl get crd certificates.cert-manager.io -o yaml | grep "app.kubernetes.io/version:"`{{exec}}
 
-This demonstrates advanced vCluster capabilities:
-- vCluster can install CRDs that don't exist in the host cluster
-- vCluster can install different versions of CRDs
-- Multiple CRDs can coexist in the same vCluster
-- Custom resources can be created and managed independently
-- This enables flexible tenancy models where each tenant can have their own CRD ecosystem
+List all cert-manager CRDs:
 
-This level of flexibility is what makes vCluster powerful for enterprise Kubernetes deployments.
+`kubectl get crds | grep cert-manager`{{exec}}
 
-## Important Note
+## Result:
 
-We've now demonstrated CRD isolation between the host and vCluster. In the next step, we'll disconnect from the vCluster to return to the host cluster context so we can continue with host cluster operations.
+The host cluster now runs Cert-Manager v1.14.0.
+
+This is a common scenario in shared cluster environments where the platform team manages a specific version.
