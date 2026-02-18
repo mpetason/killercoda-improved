@@ -6,9 +6,9 @@ Limit ranges inject default CPU and memory requests and limits into pods that do
 
 `vcluster disconnect`{{exec}}
 
-## Write a vcluster.yaml with limitRange
+## Write the vcluster.yaml
 
-`cat <<'EOF' > /tmp/limits-demo.yaml
+```yaml
 policies:
   limitRange:
     enabled: true
@@ -18,14 +18,16 @@ policies:
     defaultRequest:
       cpu: "100m"
       memory: "128Mi"
-EOF`{{exec}}
+```
+
+Save this as `vcluster.yaml` in the **Editor** tab.
 
 - `default` — applied as the **limit** when a container doesn't specify one
 - `defaultRequest` — applied as the **request** when a container doesn't specify one
 
 ## Create the vCluster
 
-`vcluster create limits-demo --namespace limits-ns --values /tmp/limits-demo.yaml`{{exec}}
+`vcluster create limits-demo --namespace limits-ns --values vcluster.yaml`{{exec}}
 
 ## Verify the LimitRange was created
 
