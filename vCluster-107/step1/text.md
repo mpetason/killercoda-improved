@@ -33,7 +33,7 @@ The pod should be `Running`.
 
 Now try a pod that requests `privileged: true`:
 
-`cat <<'EOF' | kubectl apply -f -
+```yaml
 apiVersion: v1
 kind: Pod
 metadata:
@@ -44,7 +44,11 @@ spec:
     image: nginx:alpine
     securityContext:
       privileged: true
-EOF`{{exec}}
+```
+
+Save this as `priv-pod.yaml` in the **Editor** tab.
+
+`kubectl apply -f priv-pod.yaml`{{exec}}
 
 The admission webhook should reject this with an error mentioning the `baseline` policy violation. The pod will not be created.
 
