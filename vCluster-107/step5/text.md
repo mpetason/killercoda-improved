@@ -51,7 +51,7 @@ Save this as `vcluster.yaml` in the **Editor** tab.
 
 **Layer 1 — PSS blocks privileged pod:**
 
-`cat <<'EOF' | kubectl apply -f - 2>&1 || true
+```yaml
 apiVersion: v1
 kind: Pod
 metadata:
@@ -62,7 +62,11 @@ spec:
     image: nginx:alpine
     securityContext:
       privileged: true
-EOF`{{exec}}
+```
+
+Save this as `bad-pod.yaml` in the **Editor** tab.
+
+`kubectl apply -f bad-pod.yaml 2>&1 || true`{{exec}}
 
 **Layer 2 — LimitRange injects defaults:**
 
