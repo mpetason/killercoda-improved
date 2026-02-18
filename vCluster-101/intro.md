@@ -1,23 +1,22 @@
 # Welcome to vCluster 101
 
-What is vCluster?
+Imagine your platform team gets three requests on the same day: the ML team needs a cluster with custom CRDs, the security team needs a hardened environment to test policy changes, and a new product squad needs somewhere safe to break things without touching production. Provisioning three real clusters takes hours and costs real money. Telling everyone to share namespaces on one cluster means one team's CRD install or RBAC mistake can affect everyone else.
 
-vCluster lets teams run virtual Kubernetes clusters on existing host clusters, giving each tenant an isolated control plane without creating separate physical clusters. It supports tenancy models from simple namespace isolation to fully dedicated nodes, GPUs, and bare metal. Environments are defined declaratively for easy, repeatable provisioning. By consolidating many virtual clusters onto fewer hosts, teams cut Kubernetes costs and simplify multi-tenant operations.
+vCluster is a third option: a full Kubernetes control plane that runs inside a single namespace on your existing cluster. It spins up in seconds, gives each tenant their own isolated API server and etcd, and disappears cleanly when it's no longer needed — all without touching the host cluster's configuration.
+
+In this lab you'll create a vCluster, deploy an application into it, then disconnect and look at what the host cluster actually sees. That moment — realizing the deployment you created has vanished from the host's view while the pod is still running — is what makes the isolation real.
 
 ![Shared Nodes](./assets/shared-nodes.png)
 
-What does this lab cover?
-
-In this lab we are going to cover most of the Quick-Start Guide (https://www.vcluster.com/docs/vcluster/) in the vCluster docs.
-
-We will:
+## What you'll do
 
 - Install the vCluster CLI
-- Deploy a vCluster
-- Inspect the vCluster
-- Create a Deployment in the vCluster and view resources
-- Disconnect from the vCluster and inspect the Host Cluster
+- Deploy a vCluster into a namespace on the host cluster
+- Inspect how the vCluster's resources differ from the host's
+- Create a Deployment inside the vCluster
+- Disconnect and observe what the host cluster sees (and doesn't see)
+- Delete the vCluster and confirm everything cleans up
 
-We are going to keep the intro short and then move on to more customizations and more in depth options that you can use with your vCluster in the following labs. The purpose of this guide is to give you an easier option to get started with vCluster, especially if you do not currently have access to a Kubernetes Cluster.
+We keep this lab focused on the fundamentals. The follow-on labs (102–108) go deeper into multi-tenancy, CRD isolation, backup/restore, security policies, and more.
 
-Thanks for checking this lab out. We think vCluster is pretty cool and would love to hear from you if you have any feedback.
+Thanks for checking this out — we think vCluster is pretty cool and would love to hear from you on [Slack](https://slack.vcluster.com) if you have feedback.
