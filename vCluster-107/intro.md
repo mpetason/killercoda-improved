@@ -16,6 +16,7 @@ In this scenario you will:
 By the end, you will know how to apply defense-in-depth security controls to vClusters in production.
 
 Reference: https://www.vcluster.com/docs/vcluster/configure/vcluster-yaml/rbac
+
 Reference: https://www.vcluster.com/docs/vcluster/configure/vcluster-yaml/policies/
 
 If you need help, join the community Slack:

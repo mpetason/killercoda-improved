@@ -6,22 +6,24 @@ The vCluster syncer runs on the host cluster and needs a ClusterRole to access h
 
 `vcluster disconnect`{{exec}}
 
-## Write a vcluster.yaml with extraRules
+## Write the vcluster.yaml
 
-`cat <<'EOF' > /tmp/rbac-demo.yaml
+```yaml
 rbac:
   clusterRole:
     extraRules:
       - apiGroups: [""]
         resources: ["nodes"]
         verbs: ["get", "list", "watch"]
-EOF`{{exec}}
+```
+
+Save this as `vcluster.yaml` in the **Editor** tab.
 
 This adds read-only access to host Node objects for the syncer. This is already in the default rules for most vCluster configurations, but it illustrates the pattern for adding custom permissions.
 
 ## Create the vCluster
 
-`vcluster create rbac-demo --namespace rbac-ns --values /tmp/rbac-demo.yaml`{{exec}}
+`vcluster create rbac-demo --namespace rbac-ns --values vcluster.yaml`{{exec}}
 
 ## Inspect the syncer ClusterRole on the host
 

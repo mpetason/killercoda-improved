@@ -6,9 +6,9 @@ In production you want all three policy layers active together. PSS blocks unsaf
 
 `vcluster disconnect`{{exec}}
 
-## Write the combined vcluster.yaml
+## Write the vcluster.yaml
 
-`cat <<'EOF' > /tmp/layered-demo.yaml
+```yaml
 policies:
   podSecurityStandard: baseline
   resourceQuota:
@@ -33,11 +33,13 @@ rbac:
       - apiGroups: [""]
         resources: ["nodes"]
         verbs: ["get", "list", "watch"]
-EOF`{{exec}}
+```
+
+Save this as `vcluster.yaml` in the **Editor** tab.
 
 ## Create the vCluster
 
-`vcluster create layered-demo --namespace layered-ns --values /tmp/layered-demo.yaml`{{exec}}
+`vcluster create layered-demo --namespace layered-ns --values vcluster.yaml`{{exec}}
 
 ## Verify all three policy objects exist
 

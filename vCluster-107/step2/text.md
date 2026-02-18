@@ -6,22 +6,24 @@ Resource quotas cap the total amount of resources that can be consumed in the vi
 
 `vcluster disconnect`{{exec}}
 
-## Write a vcluster.yaml with resource quota
+## Write the vcluster.yaml
 
-`cat <<'EOF' > /tmp/quota-demo.yaml
+```yaml
 policies:
   podSecurityStandard: baseline
   resourceQuota:
     enabled: true
     quota:
       pods: "3"
-EOF`{{exec}}
+```
+
+Save this as `vcluster.yaml` in the **Editor** tab.
 
 This configuration caps the default namespace at 3 pods.
 
 ## Create the vCluster
 
-`vcluster create quota-demo --namespace quota-ns --values /tmp/quota-demo.yaml`{{exec}}
+`vcluster create quota-demo --namespace quota-ns --values vcluster.yaml`{{exec}}
 
 ## Verify the ResourceQuota was created
 

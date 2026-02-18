@@ -4,16 +4,18 @@ Pod Security Standards (PSS) define three policy levels: `privileged`, `baseline
 
 ## Write the vcluster.yaml
 
-`cat <<'EOF' > /tmp/security-demo.yaml
+```yaml
 policies:
   podSecurityStandard: baseline
-EOF`{{exec}}
+```
+
+Save this as `vcluster.yaml` in the **Editor** tab.
 
 The `baseline` standard blocks the most common privilege escalation paths — hostPID, hostNetwork, hostIPC, privileged containers, and unsafe volume types — while allowing most legitimate workloads through.
 
 ## Create the vCluster
 
-`vcluster create security-demo --namespace security-ns --values /tmp/security-demo.yaml`{{exec}}
+`vcluster create security-demo --namespace security-ns --values vcluster.yaml`{{exec}}
 
 This command creates the vCluster and connects to it automatically.
 
