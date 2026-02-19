@@ -7,7 +7,6 @@
 | **`vcluster snapshot`** | Full control plane + optional volumes | Fast | Low |
 | **`vcluster snapshot` + S3/OCI** | Full control plane (off-cluster) | Fast | Low-Medium |
 | **YAML Export** | Resource definitions only | Medium | Low |
-| **Velero** | Resources + PV data | Medium | High |
 | **GitOps (ArgoCD/Flux)** | Declarative state in git | Fast | Medium |
 
 ## Recommendations

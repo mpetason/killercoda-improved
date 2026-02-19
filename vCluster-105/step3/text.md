@@ -36,7 +36,6 @@ The `--include-volumes` flag triggers CSI volume snapshots for all PVCs in the v
 |--------|-------|----------------------|
 | `vcluster snapshot` | Full control plane + optional volumes | None (built-in) |
 | YAML export (`kubectl get -o yaml`) | Resource definitions only | None |
-| Velero | Resources + PV data | Velero install + storage |
 | GitOps (ArgoCD/Flux) | Declarative state in git | GitOps tooling |
 
 The built-in snapshot is the recommended approach for most vCluster backup scenarios because it captures everything needed to fully restore the virtual cluster.
